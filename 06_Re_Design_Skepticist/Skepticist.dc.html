@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+body { margin: 0; background: #FAF8F3; color: #211E1A; -webkit-font-smoothing: antialiased; }
+a { color: inherit; text-decoration: none; }
+a:hover { color: #8C5A3C; }
+::selection { background: #E9E2D6; }
+@keyframes rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+</style>
+</helmet>
+<div style="font-family: 'Hanken Grotesk', Helvetica, sans-serif; font-weight: 300; background: #FAF8F3; min-height: 100vh;">
+
+  <header style="position: sticky; top: 0; z-index: 5; display: flex; justify-content: space-between; align-items: baseline; padding: 30px 40px; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; background: linear-gradient(to bottom, #FAF8F3 60%, rgba(250,248,243,0));">
+    <a href="https://chengyangpeng.com/" style="display: inline-flex; gap: 12px; align-items: baseline;"><span style="color: #8C5A3C;">&#8592;</span><span style="font-weight: 500;">Cheng-Yang Peng</span></a>
+    <a href="https://chengyangpeng.com/work">Work</a>
+  </header>
+
+  <section data-screen-label="Title" style="padding: 10vh 40px 8vh; animation: rise 1.4s cubic-bezier(0.22, 1, 0.36, 1) both;">
+    <p style="font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: #7A736A; margin: 0 0 4vh;">Work — 03</p>
+    <h1 style="font-size: clamp(56px, 10vw, 150px); font-weight: 300; line-height: 0.98; letter-spacing: -0.02em; margin: 0;">Skepticist</h1>
+    <div style="display: flex; gap: 40px; flex-wrap: wrap; margin-top: 4vh; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #7A736A;">
+      <span>Dance piece</span>
+      <span>Premiere 2025</span>
+      <span>Maschinenhaus Essen</span>
+    </div>
+  </section>
+
+  <section data-screen-label="Hero image" style="padding: 0 40px;">
+    <figure style="margin: 0;">
+      <img src="{{ heroSrc }}" alt="Skepticist — two performers against a blue-lit brick wall, Maschinenhaus Essen" style="display: block; width: 100%; height: 76vh; object-fit: cover; filter: saturate(0.85);">
+      <figcaption style="font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: #B0A79A; margin-top: 14px; text-align: right;">Photo — <a href="https://sieben48.de/" target="_blank" rel="noopener" style="color: #7A736A;">sieben48</a></figcaption>
+    </figure>
+  </section>
+
+  <section data-screen-label="Concept" style="max-width: 860px; margin: 0 auto; padding: 14vh 40px;">
+    <p style="font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: #7A736A; margin: 0 0 5vh;">On the piece</p>
+    <p style="font-size: clamp(24px, 3vw, 38px); font-weight: 300; line-height: 1.35; letter-spacing: -0.01em; margin: 0; text-wrap: pretty;">&ldquo;Skepticist&rdquo; explores rationality as a core value in building an ideal society.</p>
+    <p style="font-size: clamp(24px, 3vw, 38px); font-weight: 300; line-height: 1.35; letter-spacing: -0.01em; margin: 5vh 0 0; color: #56504A; text-wrap: pretty;">The story begins with a bold hypothesis: if every individual&rsquo;s actions were driven by rationality, a spirit of exploration, and critical thinking, could a more ideal society emerge?</p>
+  </section>
+
+  <section data-screen-label="Credits" style="max-width: 860px; margin: 0 auto; padding: 0 40px 14vh;">
+    <p style="font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: #7A736A; margin: 0 0 3vh;">Credits</p>
+    <sc-for list="{{ credits }}" as="c" hint-placeholder-count="6">
+      <div style="display: grid; grid-template-columns: minmax(180px, 38%) 1fr; gap: 28px; padding: 22px 0; border-bottom: 1px solid #E5DFD3; align-items: baseline;">
+        <span style="font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #7A736A;">{{ c.role }}</span>
+        <span style="font-size: 17px; font-weight: 400; line-height: 1.5;">{{ c.name }}</span>
+      </div>
+    </sc-for>
+  </section>
+
+  <section data-screen-label="Performances" style="max-width: 860px; margin: 0 auto; padding: 0 40px 14vh;">
+    <p style="font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: #7A736A; margin: 0 0 3vh;">Performances</p>
+    <sc-for list="{{ performances }}" as="p" hint-placeholder-count="2">
+      <div style="display: grid; grid-template-columns: 140px 1fr auto; gap: 28px; padding: 22px 0; border-bottom: 1px solid #E5DFD3; align-items: baseline;">
+        <span style="font-size: 12px; letter-spacing: 0.1em; color: #B0A79A;">{{ p.date }}</span>
+        <span style="font-size: 17px; font-weight: 400;">{{ p.venue }}</span>
+        <span style="font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #8C5A3C;">{{ p.note }}</span>
+      </div>
+    </sc-for>
+    <a href="https://chengyangpeng.com/whats-on" style="display: inline-flex; align-items: baseline; gap: 14px; margin-top: 5vh; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;"><span style="color: #D9A588;">Next up</span><span>{{ nextUp }}</span><span style="color: #8C5A3C;">&#8594;</span></a>
+  </section>
+
+  <section data-screen-label="Photographs" style="padding: 0 40px 10vh; display: {{ galleryDisplay }};">
+      <p style="font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: #7A736A; margin: 0 0 3vh;">Photographs</p>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
+        <sc-for list="{{ photos }}" as="ph" hint-placeholder-count="3">
+          <figure style="margin: 0;">
+            <img src="{{ ph.src }}" alt="{{ ph.alt }}" style="display: block; width: 100%; aspect-ratio: 3 / 2; object-fit: cover; filter: saturate(0.85);">
+          </figure>
+        </sc-for>
+      </div>
+      <p style="font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: #B0A79A; margin: 14px 0 0; text-align: right;">All photos — <a href="https://sieben48.de/" target="_blank" rel="noopener" style="color: #7A736A;">sieben48</a></p>
+    </section>
+
+  <footer style="display: flex; justify-content: space-between; align-items: baseline; padding: 26px 40px; border-top: 1px solid #E5DFD3; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: #7A736A;">
+    <span>&copy; 2026 Cheng-Yang Peng</span>
+    <nav style="display: flex; gap: 32px;">
+      <a href="https://chengyangpeng.com/work">Work</a>
+      <a href="https://chengyangpeng.com/whats-on">Calendar</a>
+      <a href="https://chengyangpeng.com/contact">Contact</a>
+      <a href="https://www.instagram.com/chengyang_peng/" target="_blank" rel="noopener">Instagram</a>
+    </nav>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: &quot;100%&quot;, &quot;height&quot;: &quot;100%&quot;}, &quot;heroImage&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;default&quot;: &quot;Blue wall duo&quot;, &quot;options&quot;: [&quot;Blue wall duo&quot;, &quot;Portrait&quot;, &quot;Silhouette bow&quot;, &quot;Scientist seated&quot;], &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Imagery&quot;}, &quot;showGallery&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Imagery&quot;}, &quot;nextUp&quot;: {&quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;Lagom — Maschinenhaus Essen&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Content&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    const imgs = {
+      'Blue wall duo': 'https://images.squarespace-cdn.com/content/v1/6055dab2c740e90bc9ec4fb1/d49488b3-4419-4112-a0f1-8e87d2e8305c/Cheng_Yang_Peng_Wei_Cheng_Shao_The_Skepticist_MHE_V2_Andre%CC%81_Symann20250301_203643_Z08_4419+2.jpg',
+      'Portrait': 'https://images.squarespace-cdn.com/content/v1/6055dab2c740e90bc9ec4fb1/f81dfcb3-626a-4835-bcfb-e2307d796f94/Cheng_Yang_Peng_Wei_Cheng_Shao_The_Skepticist_MHE_V2_Andre%CC%81_Symann20250301_203223_Z08_4334.jpg',
+      'Silhouette bow': 'https://images.squarespace-cdn.com/content/v1/6055dab2c740e90bc9ec4fb1/95257277-c4f1-431c-bc46-4d82bca108ea/Cheng_Yang_Peng_Wei_Cheng_Shao_The_Skepticist_MHE_V2_Andre%CC%81_Symann20250301_203411_Z08_4382.jpg',
+      'Scientist seated': 'https://images.squarespace-cdn.com/content/v1/6055dab2c740e90bc9ec4fb1/7cf0fdf6-2326-4391-b240-779bded15719/Cheng_Yang_Peng_Wei_Cheng_Shao_The_Skepticist_MHE_V2_Andre%CC%81_Symann20250301_203521_Z08_4390-2.jpg'
+    };
+    const heroKey = this.props.heroImage ?? 'Blue wall duo';
+    const heroSrc = imgs[heroKey] ?? imgs['Blue wall duo'];
+    const photos = Object.entries(imgs).filter(([k]) => k !== heroKey).map(([k, src]) => ({ src, alt: 'Skepticist — ' + k }));
+    return {
+      heroSrc,
+      galleryDisplay: (this.props.showGallery ?? true) ? 'block' : 'none',
+      nextUp: this.props.nextUp ?? 'Lagom — Maschinenhaus Essen',
+      credits: [
+        { role: 'Artistic direction & choreography', name: 'Cheng-Yang Peng — including costume and lighting concept' },
+        { role: 'Original music', name: 'Marco Girardin' },
+        { role: 'Originally danced by', name: 'Wei-Cheng Shao, Cheng-Yang Peng' },
+        { role: 'Premiere', name: '1 March 2025, Maschinenhaus Essen' },
+        { role: 'Funded by', name: 'Kulturamt Essen' },
+        { role: 'Photography', name: 'sieben48' }
+      ],
+      performances: [
+        { date: '01.03.2025', venue: 'Maschinenhaus Essen', note: 'Premiere' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

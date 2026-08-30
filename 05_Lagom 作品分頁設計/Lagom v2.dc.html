@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+body { margin: 0; background: #FAF8F3; color: #211E1A; -webkit-font-smoothing: antialiased; overflow: hidden; }
+a { color: inherit; text-decoration: none; }
+a:hover { color: #8C5A3C; }
+::selection { background: #E9E2D6; }
+@keyframes slowzoom { from { transform: scale(1); } to { transform: scale(1.06); } }
+</style>
+</helmet>
+<div style="font-family: 'Hanken Grotesk', Helvetica, sans-serif; font-weight: 300; width: 100vw; height: 100vh; position: relative; overflow: hidden; background: #FAF8F3;">
+
+  <div data-screen-label="Scene 1 — Title" style="position: absolute; inset: 0; opacity: {{ op0 }}; pointer-events: {{ ev0 }}; transition: opacity 1.6s cubic-bezier(0.22, 1, 0.36, 1);">
+    {{ img0 }}
+    <div style="position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(20, 17, 14, 0.35), rgba(20, 17, 14, 0) 30%, rgba(20, 17, 14, 0) 55%, rgba(20, 17, 14, 0.55));"></div>
+    <div style="position: absolute; left: 40px; bottom: 96px; z-index: 3; color: #FAF8F3; max-width: 80vw;">
+      <p style="font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase; color: #D9A588; margin: 0 0 2.5vh;">Work · 01</p>
+      <h1 style="font-size: clamp(44px, 7vw, 104px); font-weight: 300; line-height: 1.0; letter-spacing: -0.015em; margin: 0;">Lagom</h1>
+      <p style="font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(250, 248, 243, 0.8); margin: 3vh 0 0;">Duet · 2026 · Maschinenhaus Essen</p>
+    </div>
+  </div>
+
+  <div data-screen-label="Scene 2 — Just right" style="position: absolute; inset: 0; background: #FAF8F3; display: flex; flex-direction: column; justify-content: center; padding: 0 40px; box-sizing: border-box; opacity: {{ op1 }}; pointer-events: {{ ev1 }}; transition: opacity 1.6s cubic-bezier(0.22, 1, 0.36, 1);">
+    <div style="max-width: 920px; margin: 0 auto;">
+      <p style="font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: #B0A79A; margin: 0 0 5vh;">On “Lagom”</p>
+      <p style="font-size: clamp(24px, 2.8vw, 40px); font-weight: 300; line-height: 1.35; letter-spacing: -0.005em; margin: 0;"><em style="font-style: italic; color: #8C5A3C;">Lagom</em> is a Swedish word meaning “not too much, not too little, just right” — a duet for anyone who’s ever felt the weight of trying to be “enough.”</p>
+    </div>
+  </div>
+
+  <div data-screen-label="Scene 3 — Rehearsing ourselves" style="position: absolute; inset: 0; background: #FAF8F3; opacity: {{ op2 }}; pointer-events: {{ ev2 }}; transition: opacity 1.6s cubic-bezier(0.22, 1, 0.36, 1);">
+    <div style="position: absolute; inset: 0; display: grid; grid-template-columns: 1fr 1fr;">
+      <div style="position: relative; overflow: hidden;">
+        {{ imgMorning }}
+        <div style="position: absolute; inset: 0; background: rgba(20, 17, 14, 0.35);"></div>
+        <div style="position: absolute; left: 40px; bottom: 60px; color: #FAF8F3; z-index: 2;">
+          <p style="font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: #D9A588; margin: 0 0 12px;">The routine</p>
+          <p style="font-size: clamp(20px, 2vw, 30px); font-weight: 300; line-height: 1.3; margin: 0; max-width: 34ch;">Two people wake up and prepare for their day — not just getting ready, but rehearsing themselves.</p>
+        </div>
+      </div>
+      <div style="position: relative; overflow: hidden;">
+        {{ imgMeeting }}
+        <div style="position: absolute; inset: 0; background: rgba(20, 17, 14, 0.2);"></div>
+        <div style="position: absolute; left: 40px; bottom: 60px; color: #FAF8F3; z-index: 2;">
+          <p style="font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: #D9A588; margin: 0 0 12px;">The meeting</p>
+          <p style="font-size: clamp(20px, 2vw, 30px); font-weight: 300; font-style: italic; line-height: 1.3; margin: 0; max-width: 34ch;">How do you have a real moment with someone when you’re both performing?</p>
+        </div>
+      </div>
+    </div>
+    <p style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 3; color: #FAF8F3; font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase; margin: 0; background: rgba(20, 17, 14, 0.55); padding: 12px 22px; backdrop-filter: blur(6px);">The gap between who we are and who we think we need to be</p>
+  </div>
+
+  <div data-screen-label="Scene 4 — Credits" style="position: absolute; inset: 0; background: #FAF8F3; display: flex; align-items: center; padding: 0 40px; box-sizing: border-box; opacity: {{ op3 }}; pointer-events: {{ ev3 }}; transition: opacity 1.6s cubic-bezier(0.22, 1, 0.36, 1);">
+    <div style="display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 60px; align-items: center; width: 100%; max-width: 1400px; margin: 0 auto;">
+      <div style="position: relative; overflow: hidden; height: 66vh;">{{ imgCredits }}</div>
+      <div>
+        <p style="font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: #B0A79A; margin: 0 0 5vh;">Credits</p>
+        <sc-for list="{{ credits }}" as="c" hint-placeholder-count="6">
+          <div style="display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 24px; padding: 1.6vh 0; border-bottom: 1px solid #E5DFD3;">
+            <span style="font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: #7A736A;">{{ c.role }}</span>
+            <span style="font-size: 15px; font-weight: 400; line-height: 1.45;">{{ c.name }}</span>
+          </div>
+        </sc-for>
+        <p style="margin: 4vh 0 0; font-size: 13px; line-height: 1.6; color: #8C5A3C;">Premiered as part of Somebody@maschinenhaus 2026 · Funded by Kulturamt Essen</p>
+      </div>
+    </div>
+  </div>
+
+  <header style="position: absolute; top: 0; left: 0; right: 0; display: flex; justify-content: space-between; padding: 30px 40px; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; z-index: 10; color: {{ chromeColor }}; transition: color 1.6s;">
+    <a href="../Cheng-Yang%20Peng%20v4.dc.html" style="font-weight: 500;">Cheng-Yang Peng</a>
+    <a href="../Cheng-Yang%20Peng%20v4.dc.html#work">Close</a>
+  </header>
+
+  <footer style="position: absolute; bottom: 0; left: 0; right: 0; display: flex; justify-content: space-between; align-items: center; padding: 26px 40px; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; z-index: 10; color: {{ chromeColor }}; transition: color 1.6s;">
+    <div style="display: flex; gap: 14px; align-items: center;">
+      <sc-for list="{{ dots }}" as="d" hint-placeholder-count="4">
+        <span onClick="{{ d.go }}" style="width: 8px; height: 8px; border-radius: 50%; cursor: pointer; background: {{ d.bg }}; opacity: {{ d.op }}; transition: opacity 0.6s;"></span>
+      </sc-for>
+    </div>
+    <a href="#" onClick="{{ next }}" style="display: inline-flex; align-items: center; gap: 12px; cursor: pointer;"><span>{{ nextLabel }}</span><span style="color: #D9A588;">→</span></a>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: &quot;100%&quot;, &quot;height&quot;: &quot;100%&quot;}, &quot;kenBurns&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Behavior&quot;}}">
+class Component extends DCLogic {
+  state = { scene: 0 };
+  componentDidMount() {
+    this.onKey = (e) => {
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') this.step(1);
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') this.step(-1);
+    };
+    this.onWheel = (e) => {
+      const now = Date.now();
+      if (this.lock && now - this.lock < 1400) return;
+      if (Math.abs(e.deltaY) < 12) return;
+      this.lock = now;
+      this.step(e.deltaY > 0 ? 1 : -1);
+    };
+    window.addEventListener('keydown', this.onKey);
+    window.addEventListener('wheel', this.onWheel, { passive: true });
+  }
+  componentWillUnmount() {
+    window.removeEventListener('keydown', this.onKey);
+    window.removeEventListener('wheel', this.onWheel);
+  }
+  step(d) { this.setState(s => ({ scene: Math.max(0, Math.min(3, s.scene + d)) })); }
+  img(src, alt, extra) {
+    const kb = this.props.kenBurns ?? true;
+    return React.createElement('img', { src, alt, style: Object.assign({ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', filter: 'saturate(0.85)' }, kb ? { animation: 'slowzoom 40s ease-in-out infinite alternate' } : {}, extra || {}) });
+  }
+  renderVals() {
+    const s = this.state.scene;
+    const base = 'https://images.squarespace-cdn.com/content/v1/6055dab2c740e90bc9ec4fb1/';
+    const HERO = base + '724c61c6-aae7-4b07-ae4c-9fa0f0d61001/20260425_Lagom_Somebody_at_MHE_Andre%CC%81_Symann_194355_Z08_1102.jpg';
+    const MORNING = base + 'dce1aed2-69f6-40a3-a24a-5a4abe68ff39/20260425_Lagom_Somebody_at_MHE_Andre%CC%81_Symann_194318_Z08_1100.jpg';
+    const MEETING = base + '2246c949-6a81-49b6-b155-0ba4a53821d8/20260425_Lagom_Somebody_at_MHE_Andre%CC%81_Symann_194907_Z08_1148.jpg';
+    const WIDE = base + '5a7445cc-84bc-43b3-8ad8-e6b664e6256f/20260425_Lagom_Somebody_at_MHE_Andre%CC%81_Symann_194026_Z62_8989.jpg';
+    const vals = { chromeColor: (s === 0 || s === 2) ? '#FAF8F3' : '#7A736A' };
+    for (let i = 0; i < 4; i++) { vals['op' + i] = s === i ? 1 : 0; vals['ev' + i] = s === i ? 'auto' : 'none'; }
+    vals.img0 = this.img(HERO, 'Lagom — Cheng-Yang Peng, photo André Symann');
+    vals.imgMorning = this.img(MORNING, 'Lagom — the routine, photo André Symann');
+    vals.imgMeeting = this.img(MEETING, 'Lagom — the meeting, photo André Symann');
+    vals.imgCredits = this.img(WIDE, 'Lagom — photo André Symann', { animation: 'none' });
+    vals.credits = [
+      { role: 'Artistic direction & choreography', name: 'Cheng-Yang Peng (incl. costume, set and lighting concept)' },
+      { role: 'Original music', name: 'Marco Girardin' },
+      { role: 'Originally danced by', name: 'Feng-Ti Yang · Pier Paolo Lara' },
+      { role: 'Premiere', name: '25 April 2026 — Maschinenhaus Essen' },
+      { role: 'Visual design', name: 'Xzavier Tang' },
+      { role: 'Lighting realisation', name: 'Simon Krämer' },
+      { role: 'Special thanks', name: 'B:STUDIO' },
+      { role: 'Photography', name: 'Ke-Chieh Liu · Ralf Silberkuhl · André Symann' }
+    ];
+    vals.dots = [0, 1, 2, 3].map(i => ({
+      go: () => this.setState({ scene: i }),
+      bg: (s === 0 || s === 2) ? '#FAF8F3' : '#211E1A',
+      op: s === i ? 1 : 0.3
+    }));
+    vals.next = (e) => { e.preventDefault(); this.setState(st => ({ scene: st.scene >= 3 ? 0 : st.scene + 1 })); };
+    vals.nextLabel = s >= 3 ? 'Back to start' : ['On lagom', 'The piece', 'Credits'][s];
+    return vals;
+  }
+}
+</script>
+</body>
+</html>
