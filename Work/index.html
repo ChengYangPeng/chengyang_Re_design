@@ -61,11 +61,11 @@ a:hover { color: #D9A588; }
     <a href="../Contact/" style="color: #FAF8F3; font-size: 32px; font-weight: 300;">Contact</a>
   </div>
 
-  <div class="work-list-wrap" style="position: absolute; left: 40px; right: 40px; top: 0; bottom: 0; display: flex; flex-direction: column; justify-content: center; z-index: 3;">
+  <div class="work-list-wrap" style="position: absolute; left: 40px; right: 40px; top: 0; bottom: 0; display: flex; flex-direction: column; justify-content: center; z-index: 3; pointer-events: none;">
     <p style="font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(250, 248, 243, 0.6); margin: 0 0 4vh;">Work</p>
     <div style="display: flex; flex-direction: column; max-width: 1100px;">
       <sc-for list="{{ works }}" as="w" hint-placeholder-count="3">
-        <a href="{{ w.href }}" onMouseEnter="{{ w.hover }}" style="display: grid; grid-template-columns: 56px minmax(0, 1fr) auto; align-items: baseline; gap: 28px; padding: 3.6vh 0; border-bottom: 1px solid rgba(250, 248, 243, 0.18); opacity: {{ w.opacity }}; transition: padding-left 0.9s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.9s ease, color 0.9s cubic-bezier(0.22, 1, 0.36, 1);" style-hover="padding-left: 20px; color: #D9A588;">
+        <a href="{{ w.href }}" onMouseEnter="{{ w.hover }}" style="display: grid; grid-template-columns: 56px minmax(0, 1fr) auto; align-items: baseline; gap: 28px; padding: 3.6vh 0; border-bottom: 1px solid rgba(250, 248, 243, 0.18); opacity: {{ w.opacity }}; pointer-events: auto; transition: padding-left 0.9s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.9s ease, color 0.9s cubic-bezier(0.22, 1, 0.36, 1);" style-hover="padding-left: 20px; color: #D9A588;">
           <span style="font-size: 12px; letter-spacing: 0.1em; color: rgba(250, 248, 243, 0.45);">{{ w.num }}</span>
           <span style="font-size: clamp(32px, 5vw, 64px); font-weight: 300; line-height: 1.05; letter-spacing: -0.01em;">{{ w.label }}</span>
           <span style="font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(250, 248, 243, 0.6);">{{ w.meta }}</span>
