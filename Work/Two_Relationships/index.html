@@ -27,6 +27,18 @@ a:hover { color: #8C5A3C; }
 ::selection { background: #E9E2D6; }
 @keyframes slowzoom { from { transform: scale(1); } to { transform: scale(1.06); } }
 @keyframes breathe { 0%, 100% { transform: scale(1); opacity: 0.5; } 50% { transform: scale(1.7); opacity: 0.95; } }
+@media (max-width: 640px) {
+  header, footer, .scene-pad { padding-left: 20px !important; padding-right: 20px !important; }
+  .scene-caption { left: 20px !important; right: 20px !important; }
+  .two-char-grid { grid-template-columns: 1fr !important; grid-template-rows: 1fr 1fr !important; }
+  .two-char-grid > div p { max-width: none !important; }
+  .credits-scene { overflow-y: auto !important; align-items: flex-start !important; padding-top: 8vh !important; padding-bottom: 10vh !important; }
+  .credits-outer { grid-template-columns: 1fr !important; gap: 20px !important; }
+  .credits-outer > div:first-child { height: 22vh !important; }
+  .credits-outer > div:last-child > p:first-child { margin-bottom: 2.5vh !important; }
+  .credits-outer > div:last-child > p:last-child { margin-top: 2.5vh !important; }
+  .credits-row { grid-template-columns: 1fr !important; gap: 4px !important; padding: 1.4vh 0 !important; }
+}
 </style>
 </helmet>
 <div style="font-family: 'Hanken Grotesk', Helvetica, sans-serif; font-weight: 300; width: 100vw; height: 100vh; position: relative; overflow: hidden; background: #FAF8F3;">
@@ -34,14 +46,14 @@ a:hover { color: #8C5A3C; }
   <div data-screen-label="Scene 1 — Title" style="position: absolute; inset: 0; opacity: {{ op0 }}; pointer-events: {{ ev0 }}; transition: opacity 1.6s cubic-bezier(0.22, 1, 0.36, 1);">
     {{ img0 }}
     <div style="position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(20, 17, 14, 0.35), rgba(20, 17, 14, 0) 30%, rgba(20, 17, 14, 0) 55%, rgba(20, 17, 14, 0.55));"></div>
-    <div style="position: absolute; left: 40px; bottom: 96px; z-index: 3; color: #FAF8F3; max-width: 80vw;">
+    <div class="scene-caption" style="position: absolute; left: 40px; bottom: 96px; z-index: 3; color: #FAF8F3; max-width: 80vw;">
       <p style="font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase; color: #D9A588; margin: 0 0 2.5vh;">Work · 02</p>
       <h1 style="font-size: clamp(44px, 7vw, 104px); font-weight: 300; line-height: 1.0; letter-spacing: -0.015em; margin: 0;">Two Relationships</h1>
       <p style="font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(250, 248, 243, 0.8); margin: 3vh 0 0;">Solo · 2025 · Rotebühlplatz Stuttgart</p>
     </div>
   </div>
 
-  <div data-screen-label="Scene 2 — Youth" style="position: absolute; inset: 0; background: #FAF8F3; display: flex; flex-direction: column; justify-content: center; padding: 0 40px; box-sizing: border-box; opacity: {{ op1 }}; pointer-events: {{ ev1 }}; transition: opacity 1.6s cubic-bezier(0.22, 1, 0.36, 1);">
+  <div data-screen-label="Scene 2 — Youth" class="scene-pad" style="position: absolute; inset: 0; background: #FAF8F3; display: flex; flex-direction: column; justify-content: center; padding: 0 40px; box-sizing: border-box; opacity: {{ op1 }}; pointer-events: {{ ev1 }}; transition: opacity 1.6s cubic-bezier(0.22, 1, 0.36, 1);">
     <div style="max-width: 920px; margin: 0 auto;">
       <p style="font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: #B0A79A; margin: 0 0 5vh;">On “Youth”</p>
       <p style="font-size: clamp(24px, 2.8vw, 40px); font-weight: 300; line-height: 1.35; letter-spacing: -0.005em; margin: 0;">A solo exploring the theme of youth, inspired by Samuel Ullman’s poem <em style="font-style: italic; color: #8C5A3C;">Youth</em>.</p>
@@ -49,7 +61,7 @@ a:hover { color: #8C5A3C; }
   </div>
 
   <div data-screen-label="Scene 3 — Two characters" style="position: absolute; inset: 0; background: #FAF8F3; opacity: {{ op2 }}; pointer-events: {{ ev2 }}; transition: opacity 1.6s cubic-bezier(0.22, 1, 0.36, 1);">
-    <div style="position: absolute; inset: 0; display: grid; grid-template-columns: 1fr 1fr;">
+    <div class="two-char-grid" style="position: absolute; inset: 0; display: grid; grid-template-columns: 1fr 1fr;">
       <div style="position: relative; overflow: hidden;">
         {{ imgStrict }}
         <div style="position: absolute; inset: 0; background: rgba(20, 17, 14, 0.35);"></div>
@@ -70,13 +82,13 @@ a:hover { color: #8C5A3C; }
     <p style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 3; color: #FAF8F3; font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase; margin: 0; background: rgba(20, 17, 14, 0.55); padding: 12px 22px; backdrop-filter: blur(6px);">Two views of life, each held with conviction</p>
   </div>
 
-  <div data-screen-label="Scene 4 — Credits" style="position: absolute; inset: 0; background: #FAF8F3; display: flex; align-items: center; padding: 0 40px; box-sizing: border-box; opacity: {{ op3 }}; pointer-events: {{ ev3 }}; transition: opacity 1.6s cubic-bezier(0.22, 1, 0.36, 1);">
-    <div style="display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 60px; align-items: center; width: 100%; max-width: 1400px; margin: 0 auto;">
+  <div data-screen-label="Scene 4 — Credits" class="credits-scene scene-pad" style="position: absolute; inset: 0; background: #FAF8F3; display: flex; align-items: center; padding: 0 40px; box-sizing: border-box; opacity: {{ op3 }}; pointer-events: {{ ev3 }}; transition: opacity 1.6s cubic-bezier(0.22, 1, 0.36, 1);">
+    <div class="credits-outer" style="display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 60px; align-items: center; width: 100%; max-width: 1400px; margin: 0 auto;">
       <div style="position: relative; overflow: hidden; height: 66vh;">{{ imgCredits }}</div>
       <div>
         <p style="font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: #B0A79A; margin: 0 0 5vh;">Credits</p>
         <sc-for list="{{ credits }}" as="c" hint-placeholder-count="4">
-          <div style="display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 24px; padding: 2.2vh 0; border-bottom: 1px solid #E5DFD3;">
+          <div class="credits-row" style="display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 24px; padding: 2.2vh 0; border-bottom: 1px solid #E5DFD3;">
             <span style="font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: #7A736A;">{{ c.role }}</span>
             <span style="font-size: 15px; font-weight: 400; line-height: 1.45;">{{ c.name }}</span>
           </div>
