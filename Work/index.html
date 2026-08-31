@@ -26,6 +26,14 @@ a { color: inherit; text-decoration: none; }
 a:hover { color: #D9A588; }
 ::selection { background: rgba(217, 165, 136, 0.35); }
 @keyframes slowzoom { from { transform: scale(1); } to { transform: scale(1.06); } }
+.nav-toggle { display: none; background: none; border: none; padding: 0; cursor: pointer; flex-direction: column; gap: 5px; width: 22px; }
+.nav-toggle span { display: block; height: 1.5px; background: #FAF8F3; width: 100%; }
+@media (max-width: 640px) {
+  .nav-desktop { display: none !important; }
+  .nav-toggle { display: flex !important; }
+  header { padding-left: 20px !important; padding-right: 20px !important; }
+  .work-list-wrap { left: 20px !important; right: 20px !important; }
+}
 </style>
 </helmet>
 <div style="font-family: 'Hanken Grotesk', Helvetica, sans-serif; font-weight: 300; width: 100vw; height: 100vh; position: relative; overflow: hidden; background: #14110E;">
@@ -34,17 +42,26 @@ a:hover { color: #D9A588; }
   <div style="position: absolute; inset: 0; background: linear-gradient(to right, rgba(20, 17, 14, 0.88) 30%, rgba(20, 17, 14, 0.45) 70%, rgba(20, 17, 14, 0.25)); z-index: 1;"></div>
   <div style="position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(20, 17, 14, 0.5), rgba(20, 17, 14, 0) 25%, rgba(20, 17, 14, 0) 65%, rgba(20, 17, 14, 0.7)); z-index: 1;"></div>
 
-  <header style="position: absolute; top: 0; left: 0; right: 0; display: flex; justify-content: space-between; padding: 30px 40px; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; z-index: 3;">
+  <header style="position: absolute; top: 0; left: 0; right: 0; display: flex; justify-content: space-between; align-items: center; padding: 30px 40px; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; z-index: 3;">
     <a href="../" style="font-weight: 500;">Cheng-Yang Peng</a>
-    <nav style="display: flex; gap: 32px;">
+    <nav class="nav-desktop" style="display: flex; gap: 32px;">
       <span style="opacity: 0.55;">Work</span>
       <a href="../Calendar/">Calendar</a>
       <a href="../About/">About</a>
       <a href="../Contact/">Contact</a>
     </nav>
+    <button class="nav-toggle" onClick="{{ toggleMenu }}" aria-label="Menu"><span></span><span></span></button>
   </header>
 
-  <div style="position: absolute; left: 40px; right: 40px; top: 0; bottom: 0; display: flex; flex-direction: column; justify-content: center; z-index: 3;">
+  <div style="position: absolute; inset: 0; z-index: 15; background: #14110E; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 36px; opacity: {{ menuOpacity }}; pointer-events: {{ menuEvents }}; transition: opacity 0.5s ease;">
+    <a href="#" onClick="{{ toggleMenu }}" style="position: absolute; top: 30px; right: 40px; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(250, 248, 243, 0.6);">Close</a>
+    <span style="color: #FAF8F3; font-size: 32px; font-weight: 300; opacity: 0.55;">Work</span>
+    <a href="../Calendar/" style="color: #FAF8F3; font-size: 32px; font-weight: 300;">Calendar</a>
+    <a href="../About/" style="color: #FAF8F3; font-size: 32px; font-weight: 300;">About</a>
+    <a href="../Contact/" style="color: #FAF8F3; font-size: 32px; font-weight: 300;">Contact</a>
+  </div>
+
+  <div class="work-list-wrap" style="position: absolute; left: 40px; right: 40px; top: 0; bottom: 0; display: flex; flex-direction: column; justify-content: center; z-index: 3;">
     <p style="font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(250, 248, 243, 0.6); margin: 0 0 4vh;">Work</p>
     <div style="display: flex; flex-direction: column; max-width: 1100px;">
       <sc-for list="{{ works }}" as="w" hint-placeholder-count="3">
@@ -60,7 +77,7 @@ a:hover { color: #D9A588; }
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: &quot;100%&quot;, &quot;height&quot;: &quot;100%&quot;}}">
 class Component extends DCLogic {
-  state = { active: 0 };
+  state = { active: 0, menuOpen: false };
   works() {
     return [
       { num: '01', label: 'Lagom', meta: '2026 · Essen', href: './Lagom/',
@@ -74,12 +91,16 @@ class Component extends DCLogic {
   renderVals() {
     const works = this.works();
     const active = works[this.state.active];
+    const noHover = typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(hover: none)').matches;
     return {
       bgImage: React.createElement('img', { key: active.img, src: active.img, alt: active.label,
         style: { position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', filter: 'saturate(0.8)', animation: 'slowzoom 40s ease-in-out infinite alternate' } }),
+      toggleMenu: (e) => { if (e) e.preventDefault(); this.setState((s) => ({ menuOpen: !s.menuOpen })); },
+      menuOpacity: this.state.menuOpen ? 1 : 0,
+      menuEvents: this.state.menuOpen ? 'auto' : 'none',
       works: works.map((w, i) => ({ ...w,
         hover: () => this.setState({ active: i }),
-        opacity: i === this.state.active ? 1 : 0.55 }))
+        opacity: noHover ? 1 : (i === this.state.active ? 1 : 0.55) }))
     };
   }
 }
