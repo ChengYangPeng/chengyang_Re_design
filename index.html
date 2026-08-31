@@ -28,6 +28,19 @@ a:hover { color: #8C5A3C; }
 @keyframes breathe { 0%, 100% { transform: scale(1); opacity: 0.5; } 50% { transform: scale(1.7); opacity: 0.95; } }
 @keyframes breatheText { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
 @keyframes slowzoom { from { transform: scale(1); } to { transform: scale(1.06); } }
+.nav-toggle { display: none; background: none; border: none; padding: 0; cursor: pointer; flex-direction: column; gap: 5px; width: 22px; }
+.nav-toggle span { display: block; height: 1.5px; background: #FAF8F3; width: 100%; }
+@media (hover: none) {
+  .carousel-arrow { opacity: 0.55 !important; }
+}
+@media (max-width: 640px) {
+  .nav-desktop { display: none !important; }
+  .nav-toggle { display: flex !important; }
+  header, footer { padding-left: 20px !important; padding-right: 20px !important; }
+  footer { flex-wrap: wrap; row-gap: 10px; }
+  .slide-info { display: none !important; }
+  .hero-caption { max-width: calc(100vw - 40px) !important; }
+}
 </style>
 </helmet>
 <div style="font-family: 'Hanken Grotesk', Helvetica, sans-serif; font-weight: 300; width: 100vw; height: 100vh; position: relative; overflow: hidden; background: #FAF8F3;">
@@ -49,25 +62,34 @@ a:hover { color: #8C5A3C; }
     {{ heroImage }}
     <div style="position: absolute; inset: 0; background: {{ overlayGradient }}; transition: background 2.4s cubic-bezier(0.22, 1, 0.36, 1);"></div>
 
-    <header style="position: absolute; top: 0; left: 0; right: 0; display: flex; justify-content: space-between; padding: 30px 40px; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #FAF8F3; z-index: 3;">
+    <header style="position: absolute; top: 0; left: 0; right: 0; display: flex; justify-content: space-between; align-items: center; padding: 30px 40px; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #FAF8F3; z-index: 3;">
       <span style="font-weight: 500;">Cheng-Yang Peng</span>
-      <nav style="display: flex; gap: 32px;">
+      <nav class="nav-desktop" style="display: flex; gap: 32px;">
         <a href="./Work/">Work</a>
         <a href="./Calendar/">Calendar</a>
         <a href="./About/">About</a>
         <a href="./Contact/">Contact</a>
       </nav>
+      <button class="nav-toggle" onClick="{{ toggleMenu }}" aria-label="Menu"><span></span><span></span></button>
     </header>
 
-    <a href="#" onClick="{{ prevSlide }}" aria-label="Previous" style="position: absolute; left: 0; top: 15%; bottom: 25%; width: 18%; z-index: 2; display: flex; align-items: center; justify-content: flex-start; padding-left: 24px; color: #FAF8F3; font-size: 28px; font-weight: 300; opacity: 0; transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1); cursor: w-resize;" style-hover="opacity: 0.85; color: #FAF8F3;">←</a>
-    <a href="#" onClick="{{ nextSlide }}" aria-label="Next" style="position: absolute; right: 0; top: 15%; bottom: 25%; width: 18%; z-index: 2; display: flex; align-items: center; justify-content: flex-end; padding-right: 24px; color: #FAF8F3; font-size: 28px; font-weight: 300; opacity: 0; transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1); cursor: e-resize;" style-hover="opacity: 0.85; color: #FAF8F3;">→</a>
+    <div style="position: absolute; inset: 0; z-index: 15; background: #14110E; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 36px; opacity: {{ menuOpacity }}; pointer-events: {{ menuEvents }}; transition: opacity 0.5s ease;">
+      <a href="#" onClick="{{ toggleMenu }}" style="position: absolute; top: 30px; right: 40px; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(250, 248, 243, 0.6);">Close</a>
+      <a href="./Work/" style="color: #FAF8F3; font-size: 32px; font-weight: 300;">Work</a>
+      <a href="./Calendar/" style="color: #FAF8F3; font-size: 32px; font-weight: 300;">Calendar</a>
+      <a href="./About/" style="color: #FAF8F3; font-size: 32px; font-weight: 300;">About</a>
+      <a href="./Contact/" style="color: #FAF8F3; font-size: 32px; font-weight: 300;">Contact</a>
+    </div>
 
-    <div style="position: absolute; left: 40px; bottom: 96px; z-index: 3; max-width: 70vw; color: #FAF8F3; text-shadow: 0 1px 28px rgba(10, 8, 6, 0.6), 0 1px 6px rgba(10, 8, 6, 0.3); opacity: {{ captionOpacity }}; transition: opacity 1.6s cubic-bezier(0.22, 1, 0.36, 1);">
+    <a href="#" onClick="{{ prevSlide }}" aria-label="Previous" class="carousel-arrow" style="position: absolute; left: 0; top: 15%; bottom: 25%; width: 18%; z-index: 2; display: flex; align-items: center; justify-content: flex-start; padding-left: 24px; color: #FAF8F3; font-size: 28px; font-weight: 300; opacity: 0; transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1); cursor: w-resize;" style-hover="opacity: 0.85; color: #FAF8F3;">←</a>
+    <a href="#" onClick="{{ nextSlide }}" aria-label="Next" class="carousel-arrow" style="position: absolute; right: 0; top: 15%; bottom: 25%; width: 18%; z-index: 2; display: flex; align-items: center; justify-content: flex-end; padding-right: 24px; color: #FAF8F3; font-size: 28px; font-weight: 300; opacity: 0; transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1); cursor: e-resize;" style-hover="opacity: 0.85; color: #FAF8F3;">→</a>
+
+    <div class="hero-caption" style="position: absolute; left: 40px; bottom: 96px; z-index: 3; max-width: 70vw; color: #FAF8F3; text-shadow: 0 1px 28px rgba(10, 8, 6, 0.6), 0 1px 6px rgba(10, 8, 6, 0.3); opacity: {{ captionOpacity }}; transition: opacity 1.6s cubic-bezier(0.22, 1, 0.36, 1);">
       <h1 style="font-size: clamp(40px, 6.5vw, 96px); font-weight: 300; line-height: 1.02; letter-spacing: -0.015em; margin: 0;">{{ line1 }}<br>{{ line2 }}</h1>
       <a href="{{ currentSlide.href }}" style="display: inline-flex; align-items: baseline; gap: 14px; margin-top: 4vh; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;"><span style="color: #D9A588;">{{ nextLabel }}</span><span>{{ nextText }}</span></a>
     </div>
 
-    <div style="position: absolute; right: 40px; bottom: 96px; z-index: 3; display: flex; flex-direction: column; align-items: flex-end; gap: 18px; color: #FAF8F3; text-shadow: 0 1px 22px rgba(10, 8, 6, 0.6), 0 1px 5px rgba(10, 8, 6, 0.35);">
+    <div class="slide-info" style="position: absolute; right: 40px; bottom: 96px; z-index: 3; display: flex; flex-direction: column; align-items: flex-end; gap: 18px; color: #FAF8F3; text-shadow: 0 1px 22px rgba(10, 8, 6, 0.6), 0 1px 5px rgba(10, 8, 6, 0.35);">
       <a href="{{ currentSlide.href }}" style="font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #FAF8F3;">{{ currentSlide.label }}&ensp;<span style="color: rgba(250, 248, 243, 0.6);">{{ currentSlide.meta }}</span></a>
       <div style="display: flex; gap: 10px;">
         <sc-for list="{{ slideMarks }}" as="m" hint-placeholder-count="3">
@@ -88,7 +110,7 @@ a:hover { color: #8C5A3C; }
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: &quot;100%&quot;, &quot;height&quot;: &quot;100%&quot;}, &quot;skipThreshold&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: false, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Behavior&quot;}, &quot;slideSeconds&quot;: {&quot;editor&quot;: &quot;range&quot;, &quot;default&quot;: 10, &quot;min&quot;: 4, &quot;max&quot;: 20, &quot;step&quot;: 1, &quot;unit&quot;: &quot;s&quot;, &quot;tsType&quot;: &quot;number&quot;, &quot;section&quot;: &quot;Behavior&quot;}}">
 class Component extends DCLogic {
-  state = { entered: false, slide: 0, captionVisible: true };
+  state = { entered: false, slide: 0, captionVisible: true, menuOpen: false };
   componentDidMount() {
     this.period = this.props.slideSeconds ? this.props.slideSeconds * 1000 : 8000;
     this.startAuto();
@@ -134,6 +156,9 @@ class Component extends DCLogic {
     const entered = this.state.entered || (this.props.skipThreshold ?? false);
     return {
       enter: () => this.setState({ entered: true }),
+      toggleMenu: (e) => { if (e) e.preventDefault(); this.setState((s) => ({ menuOpen: !s.menuOpen })); },
+      menuOpacity: this.state.menuOpen ? 1 : 0,
+      menuEvents: this.state.menuOpen ? 'auto' : 'none',
       thresholdOpacity: entered ? 0 : 1,
       thresholdEvents: entered ? 'none' : 'auto',
       homeOpacity: entered ? 1 : 0,
