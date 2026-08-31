@@ -26,6 +26,14 @@ a { color: inherit; text-decoration: none; }
 a:hover { color: #8C5A3C; }
 ::selection { background: #E9E2D6; }
 @keyframes slowzoom { from { transform: scale(1); } to { transform: scale(1.06); } }
+@media (max-width: 640px) {
+  header, footer, .scene-pad { padding-left: 20px !important; padding-right: 20px !important; }
+  .scene-caption { left: 20px !important; }
+  .credits-scene { overflow-y: auto !important; align-items: flex-start !important; padding-top: 11vh !important; padding-bottom: 8vh !important; }
+  .credits-outer { grid-template-columns: 1fr !important; gap: 20px !important; }
+  .credits-outer > div:first-child { height: 30vh !important; }
+  .credits-row { grid-template-columns: 1fr !important; gap: 4px !important; }
+}
 </style>
 </helmet>
 <div style="font-family: 'Hanken Grotesk', Helvetica, sans-serif; font-weight: 300; width: 100vw; height: 100vh; position: relative; overflow: hidden; background: #FAF8F3;">
@@ -33,14 +41,14 @@ a:hover { color: #8C5A3C; }
   <div data-screen-label="Scene 1 — Title" style="position: absolute; inset: 0; opacity: {{ op0 }}; pointer-events: {{ ev0 }}; transition: opacity 1.6s cubic-bezier(0.22, 1, 0.36, 1);">
     {{ img0 }}
     <div style="position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(20, 17, 14, 0.35), rgba(20, 17, 14, 0) 30%, rgba(20, 17, 14, 0) 55%, rgba(20, 17, 14, 0.55));"></div>
-    <div style="position: absolute; left: 40px; bottom: 96px; z-index: 3; color: #FAF8F3; max-width: 80vw;">
+    <div class="scene-caption" style="position: absolute; left: 40px; bottom: 96px; z-index: 3; color: #FAF8F3; max-width: 80vw;">
       <p style="font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase; color: #D9A588; margin: 0 0 2.5vh;">Work · 01</p>
       <h1 style="font-size: clamp(44px, 7vw, 104px); font-weight: 300; line-height: 1.0; letter-spacing: -0.015em; margin: 0;">Lagom</h1>
       <p style="font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(250, 248, 243, 0.8); margin: 3vh 0 0;">Duet · 2026 · Maschinenhaus Essen</p>
     </div>
   </div>
 
-  <div data-screen-label="Scene 2 — Just right" style="position: absolute; inset: 0; background: #FAF8F3; display: flex; flex-direction: column; justify-content: center; padding: 0 40px; box-sizing: border-box; opacity: {{ op1 }}; pointer-events: {{ ev1 }}; transition: opacity 1.6s cubic-bezier(0.22, 1, 0.36, 1);">
+  <div data-screen-label="Scene 2 — Just right" class="scene-pad" style="position: absolute; inset: 0; background: #FAF8F3; display: flex; flex-direction: column; justify-content: center; padding: 0 40px; box-sizing: border-box; opacity: {{ op1 }}; pointer-events: {{ ev1 }}; transition: opacity 1.6s cubic-bezier(0.22, 1, 0.36, 1);">
     <div style="max-width: 920px; margin: 0 auto;">
       <p style="font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: #B0A79A; margin: 0 0 5vh;">On “Lagom”</p>
       <p style="font-size: clamp(24px, 2.8vw, 40px); font-weight: 300; line-height: 1.35; letter-spacing: -0.005em; margin: 0;"><em style="font-style: italic; color: #8C5A3C;">Lagom</em> is a Swedish word meaning “not too much, not too little, just right.”</p>
@@ -52,20 +60,20 @@ a:hover { color: #8C5A3C; }
       {{ imgMeeting }}
       <div style="position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(20, 17, 14, 0.3), rgba(20, 17, 14, 0) 30%, rgba(20, 17, 14, 0) 55%, rgba(20, 17, 14, 0.5));"></div>
     </div>
-    <div style="position: absolute; left: 40px; bottom: 60px; color: #FAF8F3; z-index: 2; max-width: 80vw;">
+    <div class="scene-caption" style="position: absolute; left: 40px; bottom: 60px; color: #FAF8F3; z-index: 2; max-width: 80vw;">
       <p style="font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: #D9A588; margin: 0 0 12px;">The routine, the meeting</p>
       <p style="font-size: clamp(20px, 2vw, 30px); font-weight: 300; line-height: 1.3; margin: 0; max-width: 44ch;">Two people wake up and prepare for their day, not just getting ready, but rehearsing themselves. How do you have a real moment with someone when you’re both performing?</p>
     </div>
     <p style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 3; color: #FAF8F3; font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase; margin: 0; background: rgba(20, 17, 14, 0.55); padding: 12px 22px; backdrop-filter: blur(6px);">The gap between who we are and who we think we need to be</p>
   </div>
 
-  <div data-screen-label="Scene 4 — Credits" style="position: absolute; inset: 0; background: #FAF8F3; display: flex; align-items: center; padding: 0 40px; box-sizing: border-box; opacity: {{ op3 }}; pointer-events: {{ ev3 }}; transition: opacity 1.6s cubic-bezier(0.22, 1, 0.36, 1);">
-    <div style="display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 60px; align-items: center; width: 100%; max-width: 1400px; margin: 0 auto;">
+  <div data-screen-label="Scene 4 — Credits" class="credits-scene scene-pad" style="position: absolute; inset: 0; background: #FAF8F3; display: flex; align-items: center; padding: 0 40px; box-sizing: border-box; opacity: {{ op3 }}; pointer-events: {{ ev3 }}; transition: opacity 1.6s cubic-bezier(0.22, 1, 0.36, 1);">
+    <div class="credits-outer" style="display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 60px; align-items: center; width: 100%; max-width: 1400px; margin: 0 auto;">
       <div style="position: relative; overflow: hidden; height: 66vh;">{{ imgCredits }}</div>
       <div>
         <p style="font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: #B0A79A; margin: 0 0 5vh;">Credits</p>
         <sc-for list="{{ credits }}" as="c" hint-placeholder-count="6">
-          <div style="display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 24px; padding: 1.6vh 0; border-bottom: 1px solid #E5DFD3;">
+          <div class="credits-row" style="display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 24px; padding: 1.6vh 0; border-bottom: 1px solid #E5DFD3;">
             <span style="font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: #7A736A;">{{ c.role }}</span>
             <span style="font-size: 15px; font-weight: 400; line-height: 1.45;">{{ c.name }}</span>
           </div>
