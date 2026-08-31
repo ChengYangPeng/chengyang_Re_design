@@ -27,21 +27,43 @@ a { color: inherit; text-decoration: none; }
 a:hover { color: #8C5A3C; }
 ::selection { background: #E9E2D6; }
 @keyframes breathe { 0%, 100% { transform: scale(1); opacity: 0.5; } 50% { transform: scale(1.7); opacity: 0.95; } }
+.nav-toggle { display: none; background: none; border: none; padding: 0; cursor: pointer; flex-direction: column; gap: 5px; width: 22px; }
+.nav-toggle span { display: block; height: 1.5px; background: #211E1A; width: 100%; }
+@media (max-width: 640px) {
+  .nav-desktop { display: none !important; }
+  .nav-toggle { display: flex !important; }
+  .page-wrap { height: auto !important; min-height: 100vh !important; overflow: visible !important; }
+  header, section, footer { padding-left: 20px !important; padding-right: 20px !important; }
+  section { padding-top: 6vh !important; padding-bottom: 6vh !important; }
+  .contact-grid { grid-template-columns: 1fr !important; }
+  .contact-grid > div:last-child { max-height: none !important; overflow: visible !important; margin-top: 4vh; }
+  footer { grid-template-columns: 1fr 1fr !important; row-gap: 16px !important; }
+  footer > div:last-child { text-align: left !important; grid-column: span 2; }
+}
 </style>
 </helmet>
-<div style="font-family: 'Hanken Grotesk', Helvetica, sans-serif; font-weight: 300; background: #FAF8F3; height: 100vh; box-sizing: border-box; display: flex; flex-direction: column; overflow: hidden;">
+<div class="page-wrap" style="font-family: 'Hanken Grotesk', Helvetica, sans-serif; font-weight: 300; background: #FAF8F3; height: 100vh; box-sizing: border-box; display: flex; flex-direction: column; overflow: hidden;">
 
-  <header data-screen-label="Contact" style="display: flex; justify-content: space-between; padding: 26px 40px; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;">
+  <header data-screen-label="Contact" style="display: flex; justify-content: space-between; align-items: center; padding: 26px 40px; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;">
     <a href="../" style="font-weight: 500;">Cheng-Yang Peng</a>
-    <nav style="display: flex; gap: 32px;">
+    <nav class="nav-desktop" style="display: flex; gap: 32px;">
       <a href="../Work/">Work</a>
       <a href="../Calendar/">Calendar</a>
       <a href="../About/">About</a>
       <span style="opacity: 0.55;">Contact</span>
     </nav>
+    <button class="nav-toggle" onClick="{{ toggleMenu }}" aria-label="Menu"><span></span><span></span></button>
   </header>
 
-  <section style="flex: 1; display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: clamp(28px, 4vw, 60px); align-items: center; padding: 0 40px; box-sizing: border-box; min-height: 0;">
+  <div style="position: fixed; inset: 0; z-index: 20; background: #FAF8F3; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 36px; opacity: {{ menuOpacity }}; pointer-events: {{ menuEvents }}; transition: opacity 0.5s ease;">
+    <a href="#" onClick="{{ toggleMenu }}" style="position: absolute; top: 30px; right: 40px; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: #7A736A;">Close</a>
+    <a href="../Work/" style="color: #211E1A; font-size: 32px; font-weight: 300;">Work</a>
+    <a href="../Calendar/" style="color: #211E1A; font-size: 32px; font-weight: 300;">Calendar</a>
+    <a href="../About/" style="color: #211E1A; font-size: 32px; font-weight: 300;">About</a>
+    <span style="color: #211E1A; font-size: 32px; font-weight: 300; opacity: 0.4;">Contact</span>
+  </div>
+
+  <section class="contact-grid" style="flex: 1; display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: clamp(28px, 4vw, 60px); align-items: center; padding: 0 40px; box-sizing: border-box; min-height: 0;">
     <div style="min-height: 0;">
       <div style="display: flex; align-items: center; gap: 18px; margin-bottom: clamp(10px, 3vh, 34px);">
         <span style="width: 9px; height: 9px; border-radius: 50%; background: #8C5A3C; animation: breathe 6s ease-in-out infinite;"></span>
@@ -87,7 +109,7 @@ a:hover { color: #8C5A3C; }
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: &quot;100%&quot;, &quot;height&quot;: &quot;100%&quot;}, &quot;email&quot;: {&quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;chengyang.peng@icloud.com&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Contact&quot;}}">
 class Component extends DCLogic {
-  state = { timeEssen: '', timeHsinchu: '' };
+  state = { timeEssen: '', timeHsinchu: '', menuOpen: false };
   componentDidMount() {
     this.tick = () => {
       const fmt = (tz) => new Intl.DateTimeFormat('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: tz }).format(new Date());
@@ -101,6 +123,9 @@ class Component extends DCLogic {
     const email = this.props.email ?? 'chengyang.peng@icloud.com';
     const subj = (s) => 'mailto:' + email + '?subject=' + encodeURIComponent(s);
     return {
+      toggleMenu: (e) => { if (e) e.preventDefault(); this.setState((s) => ({ menuOpen: !s.menuOpen })); },
+      menuOpacity: this.state.menuOpen ? 1 : 0,
+      menuEvents: this.state.menuOpen ? 'auto' : 'none',
       email,
       mailto: 'mailto:' + email,
       timeEssen: this.state.timeEssen,
