@@ -35,7 +35,7 @@ a:hover { color: #8C5A3C; }
   <div data-screen-label="Scene 2 — Youth" style="position: absolute; inset: 0; background: #FAF8F3; display: flex; flex-direction: column; justify-content: center; padding: 0 40px; box-sizing: border-box; opacity: {{ op1 }}; pointer-events: {{ ev1 }}; transition: opacity 1.6s cubic-bezier(0.22, 1, 0.36, 1);">
     <div style="max-width: 920px; margin: 0 auto;">
       <p style="font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: #B0A79A; margin: 0 0 5vh;">On “Youth”</p>
-      <p style="font-size: clamp(24px, 2.8vw, 40px); font-weight: 300; line-height: 1.35; letter-spacing: -0.005em; margin: 0;">A solo exploring the theme of youth, inspired by Samuel Ullman’s poem <em style="font-style: italic; color: #8C5A3C;">Youth</em> — the conviction that youth is not a time of life, but a state of mind.</p>
+      <p style="font-size: clamp(24px, 2.8vw, 40px); font-weight: 300; line-height: 1.35; letter-spacing: -0.005em; margin: 0;">A solo exploring the theme of youth, inspired by Samuel Ullman’s poem <em style="font-style: italic; color: #8C5A3C;">Youth</em>: the conviction that youth is not a time of life, but a state of mind.</p>
     </div>
   </div>
 
@@ -58,7 +58,7 @@ a:hover { color: #8C5A3C; }
         </div>
       </div>
     </div>
-    <p style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 3; color: #FAF8F3; font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase; margin: 0; background: rgba(20, 17, 14, 0.55); padding: 12px 22px; backdrop-filter: blur(6px);">Two views of life — each held with conviction</p>
+    <p style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 3; color: #FAF8F3; font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase; margin: 0; background: rgba(20, 17, 14, 0.55); padding: 12px 22px; backdrop-filter: blur(6px);">Two views of life, each held with conviction</p>
   </div>
 
   <div data-screen-label="Scene 4 — Credits" style="position: absolute; inset: 0; background: #FAF8F3; display: flex; align-items: center; padding: 0 40px; box-sizing: border-box; opacity: {{ op3 }}; pointer-events: {{ ev3 }}; transition: opacity 1.6s cubic-bezier(0.22, 1, 0.36, 1);">
@@ -72,7 +72,7 @@ a:hover { color: #8C5A3C; }
             <span style="font-size: 15px; font-weight: 400; line-height: 1.45;">{{ c.name }}</span>
           </div>
         </sc-for>
-        <p style="margin: 4vh 0 0; font-size: 13px; line-height: 1.6; color: #8C5A3C;">Choreography Prize — 29. Internationales Solo-Tanz-Theater Festival, 2025</p>
+        <p style="margin: 4vh 0 0; font-size: 13px; line-height: 1.6; color: #8C5A3C;">Choreography Prize · 29. Internationales Solo-Tanz-Theater Festival, 2025</p>
       </div>
     </div>
   </div>
@@ -128,14 +128,14 @@ class Component extends DCLogic {
     const P3 = base + 'b4f6aacb-f2b0-489e-b2b4-f179e189b2dc/jg296755_Cheng-Yang+Peng+copy.jpg';
     const vals = { chromeColor: (s === 0 || s === 2) ? '#FAF8F3' : '#7A736A' };
     for (let i = 0; i < 4; i++) { vals['op' + i] = s === i ? 1 : 0; vals['ev' + i] = s === i ? 'auto' : 'none'; }
-    vals.img0 = this.img(P1, 'Two Relationships — Cheng-Yang Peng, photo Jo Grabowski');
-    vals.imgStrict = this.img(P2, 'The strict character — photo Jo Grabowski', { objectPosition: 'center 20%' });
-    vals.imgFree = this.img(P3, 'The free character — photo Jo Grabowski', { objectPosition: 'center 15%' });
-    vals.imgCredits = this.img(P1, 'Two Relationships — photo Jo Grabowski', { animation: 'none' });
+    vals.img0 = this.img(P1, 'Two Relationships · Cheng-Yang Peng, photo Jo Grabowski');
+    vals.imgStrict = this.img(P2, 'The strict character · photo Jo Grabowski', { objectPosition: 'center 20%' });
+    vals.imgFree = this.img(P3, 'The free character · photo Jo Grabowski', { objectPosition: 'center 15%' });
+    vals.imgCredits = this.img(P1, 'Two Relationships · photo Jo Grabowski', { animation: 'none' });
     vals.credits = [
       { role: 'Artistic direction & choreography', name: 'Cheng-Yang Peng' },
       { role: 'Originally danced by', name: 'Cheng-Yang Peng' },
-      { role: 'Premiere', name: '15 March 2025 — Rotebühlplatz Stuttgart' },
+      { role: 'Premiere', name: '15 March 2025 · Rotebühlplatz Stuttgart' },
       { role: 'Photography', name: 'Jo Grabowski' }
     ];
     vals.dots = [0, 1, 2, 3].map(i => ({

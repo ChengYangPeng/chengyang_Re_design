@@ -34,28 +34,18 @@ a:hover { color: #8C5A3C; }
   <div data-screen-label="Scene 2 — Just right" style="position: absolute; inset: 0; background: #FAF8F3; display: flex; flex-direction: column; justify-content: center; padding: 0 40px; box-sizing: border-box; opacity: {{ op1 }}; pointer-events: {{ ev1 }}; transition: opacity 1.6s cubic-bezier(0.22, 1, 0.36, 1);">
     <div style="max-width: 920px; margin: 0 auto;">
       <p style="font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: #B0A79A; margin: 0 0 5vh;">On “Lagom”</p>
-      <p style="font-size: clamp(24px, 2.8vw, 40px); font-weight: 300; line-height: 1.35; letter-spacing: -0.005em; margin: 0;"><em style="font-style: italic; color: #8C5A3C;">Lagom</em> is a Swedish word meaning “not too much, not too little, just right” — a duet for anyone who’s ever felt the weight of trying to be “enough.”</p>
+      <p style="font-size: clamp(24px, 2.8vw, 40px); font-weight: 300; line-height: 1.35; letter-spacing: -0.005em; margin: 0;"><em style="font-style: italic; color: #8C5A3C;">Lagom</em> is a Swedish word meaning “not too much, not too little, just right.” A duet for anyone who’s ever felt the weight of trying to be “enough.”</p>
     </div>
   </div>
 
   <div data-screen-label="Scene 3 — Rehearsing ourselves" style="position: absolute; inset: 0; background: #FAF8F3; opacity: {{ op2 }}; pointer-events: {{ ev2 }}; transition: opacity 1.6s cubic-bezier(0.22, 1, 0.36, 1);">
-    <div style="position: absolute; inset: 0; display: grid; grid-template-columns: 1fr 1fr;">
-      <div style="position: relative; overflow: hidden;">
-        {{ imgMorning }}
-        <div style="position: absolute; inset: 0; background: rgba(20, 17, 14, 0.35);"></div>
-        <div style="position: absolute; left: 40px; bottom: 60px; color: #FAF8F3; z-index: 2;">
-          <p style="font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: #D9A588; margin: 0 0 12px;">The routine</p>
-          <p style="font-size: clamp(20px, 2vw, 30px); font-weight: 300; line-height: 1.3; margin: 0; max-width: 34ch;">Two people wake up and prepare for their day — not just getting ready, but rehearsing themselves.</p>
-        </div>
-      </div>
-      <div style="position: relative; overflow: hidden;">
-        {{ imgMeeting }}
-        <div style="position: absolute; inset: 0; background: rgba(20, 17, 14, 0.2);"></div>
-        <div style="position: absolute; left: 40px; bottom: 60px; color: #FAF8F3; z-index: 2;">
-          <p style="font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: #D9A588; margin: 0 0 12px;">The meeting</p>
-          <p style="font-size: clamp(20px, 2vw, 30px); font-weight: 300; font-style: italic; line-height: 1.3; margin: 0; max-width: 34ch;">How do you have a real moment with someone when you’re both performing?</p>
-        </div>
-      </div>
+    <div style="position: absolute; inset: 0; overflow: hidden;">
+      {{ imgMeeting }}
+      <div style="position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(20, 17, 14, 0.3), rgba(20, 17, 14, 0) 30%, rgba(20, 17, 14, 0) 55%, rgba(20, 17, 14, 0.5));"></div>
+    </div>
+    <div style="position: absolute; left: 40px; bottom: 60px; color: #FAF8F3; z-index: 2; max-width: 80vw;">
+      <p style="font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: #D9A588; margin: 0 0 12px;">The routine, the meeting</p>
+      <p style="font-size: clamp(20px, 2vw, 30px); font-weight: 300; line-height: 1.3; margin: 0; max-width: 44ch;">Two people wake up and prepare for their day, not just getting ready, but rehearsing themselves. How do you have a real moment with someone when you’re both performing?</p>
     </div>
     <p style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 3; color: #FAF8F3; font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase; margin: 0; background: rgba(20, 17, 14, 0.55); padding: 12px 22px; backdrop-filter: blur(6px);">The gap between who we are and who we think we need to be</p>
   </div>
@@ -122,20 +112,18 @@ class Component extends DCLogic {
     const s = this.state.scene;
     const base = 'https://images.squarespace-cdn.com/content/v1/6055dab2c740e90bc9ec4fb1/';
     const HERO = base + '724c61c6-aae7-4b07-ae4c-9fa0f0d61001/20260425_Lagom_Somebody_at_MHE_Andre%CC%81_Symann_194355_Z08_1102.jpg';
-    const MORNING = base + 'dce1aed2-69f6-40a3-a24a-5a4abe68ff39/20260425_Lagom_Somebody_at_MHE_Andre%CC%81_Symann_194318_Z08_1100.jpg';
     const MEETING = base + '2246c949-6a81-49b6-b155-0ba4a53821d8/20260425_Lagom_Somebody_at_MHE_Andre%CC%81_Symann_194907_Z08_1148.jpg';
     const WIDE = base + '5a7445cc-84bc-43b3-8ad8-e6b664e6256f/20260425_Lagom_Somebody_at_MHE_Andre%CC%81_Symann_194026_Z62_8989.jpg';
     const vals = { chromeColor: (s === 0 || s === 2) ? '#FAF8F3' : '#7A736A' };
     for (let i = 0; i < 4; i++) { vals['op' + i] = s === i ? 1 : 0; vals['ev' + i] = s === i ? 'auto' : 'none'; }
-    vals.img0 = this.img(HERO, 'Lagom — Cheng-Yang Peng, photo André Symann');
-    vals.imgMorning = this.img(MORNING, 'Lagom — the routine, photo André Symann');
-    vals.imgMeeting = this.img(MEETING, 'Lagom — the meeting, photo André Symann');
-    vals.imgCredits = this.img(WIDE, 'Lagom — photo André Symann', { animation: 'none' });
+    vals.img0 = this.img(HERO, 'Lagom · Cheng-Yang Peng, photo André Symann');
+    vals.imgMeeting = this.img(MEETING, 'Lagom · the routine and the meeting, photo André Symann');
+    vals.imgCredits = this.img(WIDE, 'Lagom · photo André Symann', { animation: 'none' });
     vals.credits = [
       { role: 'Artistic direction & choreography', name: 'Cheng-Yang Peng (incl. costume, set and lighting concept)' },
       { role: 'Original music', name: 'Marco Girardin' },
       { role: 'Originally danced by', name: 'Feng-Ti Yang · Pier Paolo Lara' },
-      { role: 'Premiere', name: '25 April 2026 — Maschinenhaus Essen' },
+      { role: 'Premiere', name: '25 April 2026 · Maschinenhaus Essen' },
       { role: 'Visual design', name: 'Xzavier Tang' },
       { role: 'Lighting realisation', name: 'Simon Krämer' },
       { role: 'Special thanks', name: 'B:STUDIO' },
