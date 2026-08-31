@@ -46,7 +46,12 @@ a:hover { color: #8C5A3C; }
 
     <header style="position: absolute; top: 0; left: 0; right: 0; display: flex; justify-content: space-between; padding: 30px 40px; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #FAF8F3; z-index: 3;">
       <span style="font-weight: 500;">Cheng-Yang Peng</span>
-      <a href="./About/">About</a>
+      <nav style="display: flex; gap: 32px;">
+        <a href="#" onClick="{{ openWork }}">Work</a>
+        <a href="./Calendar/">Calendar</a>
+        <a href="./About/">About</a>
+        <a href="./Contact/">Contact</a>
+      </nav>
     </header>
 
     <a href="#" onClick="{{ prevSlide }}" aria-label="Previous" style="position: absolute; left: 0; top: 15%; bottom: 25%; width: 18%; z-index: 2; display: flex; align-items: center; justify-content: flex-start; padding-left: 24px; color: #FAF8F3; font-size: 28px; font-weight: 300; opacity: 0; transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1); cursor: w-resize;" style-hover="opacity: 0.85; color: #FAF8F3;">←</a>
