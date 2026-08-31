@@ -135,7 +135,7 @@ class Component extends DCLogic {
       : React.createElement('div', { style: { position: 'absolute', inset: 0, background: '#14110E' } });
     return {
       bgImage,
-      metaCity: active.city, metaCountdown: this.countdown(active), metaTime: time + ' · ' + active.tz.split('/')[1],
+      metaCity: active.city, metaCountdown: this.countdown(active), metaTime: time,
       hasPast: past.length > 0,
       pastEvents: past,
       events: upcoming.map((ev, i) => ({ ...ev,
