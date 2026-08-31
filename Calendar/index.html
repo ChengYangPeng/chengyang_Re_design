@@ -27,6 +27,14 @@ a:hover { color: #D9A588; }
 ::selection { background: rgba(217, 165, 136, 0.35); }
 @keyframes breathe { 0%, 100% { transform: scale(1); opacity: 0.5; } 50% { transform: scale(1.7); opacity: 0.95; } }
 @keyframes slowzoom { from { transform: scale(1); } to { transform: scale(1.06); } }
+@media (max-width: 640px) {
+  header, footer { padding-left: 20px !important; padding-right: 20px !important; }
+  [data-screen-label="Schedule"] { left: 20px !important; right: 20px !important; }
+  footer { flex-wrap: wrap !important; row-gap: 10px !important; }
+  .schedule-list { max-height: 70vh !important; overflow-y: auto !important; }
+  .schedule-row { display: flex !important; flex-direction: column !important; align-items: flex-start !important; gap: 10px !important; }
+  .schedule-row > span:last-child { align-items: flex-start !important; }
+}
 </style>
 </helmet>
 <div style="font-family: 'Hanken Grotesk', Helvetica, sans-serif; font-weight: 300; width: 100vw; height: 100vh; position: relative; overflow: hidden; background: #14110E;">
@@ -46,9 +54,9 @@ a:hover { color: #D9A588; }
   <div data-screen-label="Schedule" style="position: absolute; left: 40px; right: 40px; top: 0; bottom: 0; display: flex; flex-direction: column; justify-content: center; z-index: 3; pointer-events: none;">
     <p style="font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(250, 248, 243, 0.6); margin: 0 0 4vh; display: flex; align-items: center; gap: 14px;"><span style="width: 8px; height: 8px; border-radius: 50%; background: #D9A588; animation: breathe 6s ease-in-out infinite;"></span>Schedule</p>
 
-    <div style="display: flex; flex-direction: column; max-width: 1100px; pointer-events: auto;">
+    <div class="schedule-list" style="display: flex; flex-direction: column; max-width: 1100px; pointer-events: auto;">
       <sc-for list="{{ events }}" as="ev" hint-placeholder-count="3">
-        <a href="{{ ev.href }}" target="_blank" rel="noopener" onMouseEnter="{{ ev.hover }}" style="display: grid; grid-template-columns: 56px minmax(0, 1fr) auto; align-items: baseline; gap: 28px; padding: 3.6vh 0; border-bottom: 1px solid rgba(250, 248, 243, 0.18); opacity: {{ ev.opacity }}; transition: padding-left 0.9s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.9s ease, color 0.9s cubic-bezier(0.22, 1, 0.36, 1);" style-hover="padding-left: 20px; color: #D9A588;">
+        <a href="{{ ev.href }}" target="_blank" rel="noopener" onMouseEnter="{{ ev.hover }}" class="schedule-row" style="display: grid; grid-template-columns: 56px minmax(0, 1fr) auto; align-items: baseline; gap: 28px; padding: 3.6vh 0; border-bottom: 1px solid rgba(250, 248, 243, 0.18); opacity: {{ ev.opacity }}; transition: padding-left 0.9s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.9s ease, color 0.9s cubic-bezier(0.22, 1, 0.36, 1);" style-hover="padding-left: 20px; color: #D9A588;">
           <span style="font-size: 12px; letter-spacing: 0.1em; color: rgba(250, 248, 243, 0.45);">[{{ ev.num }}]</span>
           <span style="display: flex; flex-direction: column; gap: 8px;">
             <span style="font-size: clamp(32px, 4.6vw, 64px); font-weight: 300; line-height: 1.02; letter-spacing: -0.01em;">{{ ev.title }}</span>
@@ -133,6 +141,7 @@ class Component extends DCLogic {
       ? React.createElement('img', { key: active.img + this.state.active, src: active.img, alt: active.title,
           style: { position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', filter: 'saturate(0.75)', animation: 'slowzoom 40s ease-in-out infinite alternate' } })
       : React.createElement('div', { style: { position: 'absolute', inset: 0, background: '#14110E' } });
+    const noHover = typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(hover: none)').matches;
     return {
       bgImage,
       metaCity: active.city, metaCountdown: this.countdown(active), metaTime: time,
@@ -142,7 +151,7 @@ class Component extends DCLogic {
         num: String(i + 1).padStart(2, '0'),
         tag: (i === 0 ? 'Next up · ' : '') + ev.tag,
         hover: () => this.setState({ active: i }),
-        opacity: i === this.state.active ? 1 : 0.55 }))
+        opacity: noHover ? 1 : (i === this.state.active ? 1 : 0.55) }))
     };
   }
 }
