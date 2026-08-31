@@ -35,10 +35,10 @@ a:hover { color: #D9A588; }
     </nav>
   </header>
 
-  <div data-screen-label="Schedule" style="position: absolute; left: 40px; right: 40px; top: 0; bottom: 0; display: flex; flex-direction: column; justify-content: center; z-index: 3;">
+  <div data-screen-label="Schedule" style="position: absolute; left: 40px; right: 40px; top: 0; bottom: 0; display: flex; flex-direction: column; justify-content: center; z-index: 3; pointer-events: none;">
     <p style="font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(250, 248, 243, 0.6); margin: 0 0 4vh; display: flex; align-items: center; gap: 14px;"><span style="width: 8px; height: 8px; border-radius: 50%; background: #D9A588; animation: breathe 6s ease-in-out infinite;"></span>Schedule</p>
 
-    <div style="display: flex; flex-direction: column; max-width: 1100px;">
+    <div style="display: flex; flex-direction: column; max-width: 1100px; pointer-events: auto;">
       <sc-for list="{{ events }}" as="ev" hint-placeholder-count="3">
         <a href="{{ ev.href }}" target="_blank" rel="noopener" onMouseEnter="{{ ev.hover }}" style="display: grid; grid-template-columns: 56px minmax(0, 1fr) auto; align-items: baseline; gap: 28px; padding: 3.6vh 0; border-bottom: 1px solid rgba(250, 248, 243, 0.18); opacity: {{ ev.opacity }}; transition: padding-left 0.9s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.9s ease, color 0.9s cubic-bezier(0.22, 1, 0.36, 1);" style-hover="padding-left: 20px; color: #D9A588;">
           <span style="font-size: 12px; letter-spacing: 0.1em; color: rgba(250, 248, 243, 0.45);">[{{ ev.num }}]</span>
