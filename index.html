@@ -46,7 +46,7 @@ a:hover { color: #8C5A3C; }
 
     <header style="position: absolute; top: 0; left: 0; right: 0; display: flex; justify-content: space-between; padding: 30px 40px; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #FAF8F3; z-index: 3;">
       <span style="font-weight: 500;">Cheng-Yang Peng</span>
-      <a href="./02_About%20page%20v2%20design/index.html">About</a>
+      <a href="./About/">About</a>
     </header>
 
     <a href="#" onClick="{{ prevSlide }}" aria-label="Previous" style="position: absolute; left: 0; top: 15%; bottom: 25%; width: 18%; z-index: 2; display: flex; align-items: center; justify-content: flex-start; padding-left: 24px; color: #FAF8F3; font-size: 28px; font-weight: 300; opacity: 0; transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1); cursor: w-resize;" style-hover="opacity: 0.85; color: #FAF8F3;">←</a>
@@ -70,8 +70,8 @@ a:hover { color: #8C5A3C; }
       <span>Based between Germany &amp; Taiwan</span>
       <nav style="display: flex; gap: 32px; color: #FAF8F3;">
         <a href="#" onClick="{{ openWork }}">Work</a>
-        <a href="./03_Calendar%20頁面完成/index.html">Calendar</a>
-        <a href="./04_Contact%20頁面設計參考/index.html">Contact</a>
+        <a href="./Calendar/">Calendar</a>
+        <a href="./Contact/">Contact</a>
         <a href="https://www.instagram.com/chengyang_peng/" target="_blank" rel="noopener">Instagram</a>
       </nav>
     </footer>
@@ -121,17 +121,17 @@ class Component extends DCLogic {
   }
   slides() {
     return [
-      { label: 'Lagom', meta: '2026', href: "./05_Lagom%20作品分頁設計/index.html",
+      { label: 'Lagom', meta: '2026', href: "./Lagom/",
         line1: 'A body in a space,', line2: 'moving for no one.',
         next: 'Lagom, Maschinenhaus Essen',
         img: 'https://images.squarespace-cdn.com/content/v1/6055dab2c740e90bc9ec4fb1/724c61c6-aae7-4b07-ae4c-9fa0f0d61001/20260425_Lagom_Somebody_at_MHE_Andre%CC%81_Symann_194355_Z08_1102.jpg' },
-      { label: 'Two Relationships', meta: '2025', href: "./07_Re_Design_Two%20Relationships/index.html",
+      { label: 'Two Relationships', meta: '2025', href: "./Two_Relationships/",
         line1: 'One body, two selves:', line2: 'one bound, one free.',
         next: 'Two Relationships, Stuttgart Solo Festival',
         pos: 'center 32%',
         overlay: 'linear-gradient(to bottom, rgba(20, 17, 14, 0) 60%, rgba(20, 17, 14, 0.35))',
         img: 'assets/two-relationships-hero.jpg' },
-      { label: 'Skepticist', meta: '2025', href: "./06_Re_Design_Skepticist/index.html",
+      { label: 'Skepticist', meta: '2025', href: "./Skepticist/",
         line1: 'Doubt is a way', line2: 'of coming closer.',
         next: 'Skepticist, Somebody@Maschinenhaus',
         overlay: 'linear-gradient(to bottom, rgba(20, 17, 14, 0) 60%, rgba(20, 17, 14, 0.45))',
@@ -179,9 +179,9 @@ class Component extends DCLogic {
         }
       })),
       works: [
-        { num: '01', label: 'Lagom', meta: '2026 · Essen', href: "./05_Lagom%20作品分頁設計/index.html" },
-        { num: '02', label: 'Two Relationships', meta: '2025 · Stuttgart', href: "./07_Re_Design_Two%20Relationships/index.html" },
-        { num: '03', label: 'Skepticist', meta: '2025 · Essen', href: "./06_Re_Design_Skepticist/index.html" }
+        { num: '01', label: 'Lagom', meta: '2026 · Essen', href: "./Lagom/" },
+        { num: '02', label: 'Two Relationships', meta: '2025 · Stuttgart', href: "./Two_Relationships/" },
+        { num: '03', label: 'Skepticist', meta: '2025 · Essen', href: "./Skepticist/" }
       ]
     };
   }
