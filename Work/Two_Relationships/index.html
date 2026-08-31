@@ -88,7 +88,7 @@ a:hover { color: #8C5A3C; }
 
   <header style="position: absolute; top: 0; left: 0; right: 0; display: flex; justify-content: space-between; padding: 30px 40px; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; z-index: 10; color: {{ chromeColor }}; transition: color 1.6s;">
     <a href="../../" style="font-weight: 500;">Cheng-Yang Peng</a>
-    <a href="../">Close</a>
+    <a href="../" onClick="{{ closeBack }}">Close</a>
   </header>
 
   <footer style="position: absolute; bottom: 0; left: 0; right: 0; display: flex; justify-content: space-between; align-items: center; padding: 26px 40px; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; z-index: 10; color: {{ chromeColor }}; transition: color 1.6s;">
@@ -136,6 +136,7 @@ class Component extends DCLogic {
     const P2 = base + '31029df3-6205-477c-945c-e60c9de21d43/jg296729_Cheng-Yang+Peng+copy.jpg';
     const P3 = base + 'b4f6aacb-f2b0-489e-b2b4-f179e189b2dc/jg296755_Cheng-Yang+Peng+copy.jpg';
     const vals = { chromeColor: (s === 0 || s === 2) ? '#FAF8F3' : '#7A736A' };
+    vals.closeBack = (e) => { if (window.history.length > 1 && document.referrer) { e.preventDefault(); window.history.back(); } };
     for (let i = 0; i < 4; i++) { vals['op' + i] = s === i ? 1 : 0; vals['ev' + i] = s === i ? 'auto' : 'none'; }
     vals.img0 = this.img(P1, 'Two Relationships · Cheng-Yang Peng, photo Jo Grabowski');
     vals.imgStrict = this.img(P2, 'The strict character · photo Jo Grabowski', { objectPosition: 'center 20%' });

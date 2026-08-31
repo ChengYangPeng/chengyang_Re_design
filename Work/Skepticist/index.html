@@ -74,7 +74,7 @@ a:hover { color: #8C5A3C; }
 
   <header style="position: absolute; top: 0; left: 0; right: 0; display: flex; justify-content: space-between; padding: 30px 40px; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; z-index: 10; color: {{ chromeColor }}; transition: color 1.6s;">
     <a href="../../" style="font-weight: 500;">Cheng-Yang Peng</a>
-    <a href="../">Close</a>
+    <a href="../" onClick="{{ closeBack }}">Close</a>
   </header>
 
   <footer style="position: absolute; bottom: 0; left: 0; right: 0; display: flex; justify-content: space-between; align-items: center; padding: 26px 40px; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; z-index: 10; color: {{ chromeColor }}; transition: color 1.6s;">
@@ -122,6 +122,7 @@ class Component extends DCLogic {
     const BOW = base + '95257277-c4f1-431c-bc46-4d82bca108ea/Cheng_Yang_Peng_Wei_Cheng_Shao_The_Skepticist_MHE_V2_Andre%CC%81_Symann20250301_203411_Z08_4382.jpg';
     const SEATED = base + '7cf0fdf6-2326-4391-b240-779bded15719/Cheng_Yang_Peng_Wei_Cheng_Shao_The_Skepticist_MHE_V2_Andre%CC%81_Symann20250301_203521_Z08_4390-2.jpg';
     const vals = { chromeColor: (s === 0 || s === 2) ? '#FAF8F3' : '#7A736A' };
+    vals.closeBack = (e) => { if (window.history.length > 1 && document.referrer) { e.preventDefault(); window.history.back(); } };
     for (let i = 0; i < 4; i++) { vals['op' + i] = s === i ? 1 : 0; vals['ev' + i] = s === i ? 'auto' : 'none'; }
     vals.img0 = this.img(HERO, 'Skepticist, Cheng-Yang Peng & Wei-Cheng Shao, photo sieben48');
     vals.imgHypo = this.img(SEATED, 'Skepticist, the scientist at his desk, photo sieben48');
