@@ -151,7 +151,7 @@ class Component extends DCLogic {
       overlayGradient: this.slides()[this.state.slide].overlay || 'linear-gradient(to bottom, rgba(20, 17, 14, 0.4), rgba(20, 17, 14, 0) 28%, rgba(20, 17, 14, 0) 55%, rgba(20, 17, 14, 0.5))',
       line1: this.slides()[this.state.slide].line1,
       line2: this.slides()[this.state.slide].line2,
-      nextLabel: this.state.slide === 0 ? 'Next up' : 'The work',
+      nextLabel: 'The work',
       nextText: this.slides()[this.state.slide].next,
       captionOpacity: this.state.captionVisible ? 1 : 0,
       slideMarks: this.slides().map((s, i) => ({
