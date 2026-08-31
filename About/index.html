@@ -27,19 +27,42 @@ a:hover { color: #8C5A3C; }
 ::selection { background: #E9E2D6; }
 @keyframes breathe { 0%, 100% { transform: scale(1); opacity: 0.5; } 50% { transform: scale(1.7); opacity: 0.95; } }
 @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.nav-toggle { display: none; background: none; border: none; padding: 0; cursor: pointer; flex-direction: column; gap: 5px; width: 22px; }
+.nav-toggle span { display: block; height: 1.5px; background: #FAF8F3; width: 100%; }
+@media (max-width: 640px) {
+  .nav-desktop { display: none !important; }
+  .nav-toggle { display: flex !important; }
+  header { padding-left: 20px !important; padding-right: 20px !important; }
+  section { padding-left: 20px !important; padding-right: 20px !important; }
+  .bio-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
+  .bio-grid img { height: 50vh !important; }
+  .chapter-grid { grid-template-columns: 1fr !important; }
+  .chapter-grid > div:first-child { position: static !important; padding: 6vh 0 1vh !important; }
+  .chapter-grid > div:last-child { padding: 0 0 6vh !important; }
+  .work-row { display: flex !important; flex-direction: column !important; align-items: flex-start !important; gap: 6px !important; }
+}
 </style>
 </helmet>
 <div style="font-family: 'Hanken Grotesk', Helvetica, sans-serif; font-weight: 300; background: #FAF8F3;">
 
-  <header data-screen-label="About v2" style="position: fixed; top: 0; left: 0; right: 0; display: flex; justify-content: space-between; padding: 30px 40px; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; z-index: 10; mix-blend-mode: difference; color: #FAF8F3;">
+  <header data-screen-label="About v2" style="position: fixed; top: 0; left: 0; right: 0; display: flex; justify-content: space-between; align-items: center; padding: 30px 40px; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; z-index: 10; mix-blend-mode: difference; color: #FAF8F3;">
     <a href="../" style="font-weight: 500;">Cheng-Yang Peng</a>
-    <nav style="display: flex; gap: 32px;">
+    <nav class="nav-desktop" style="display: flex; gap: 32px;">
       <a href="../Work/">Work</a>
       <a href="../Calendar/">Calendar</a>
       <a href="../Contact/">Contact</a>
       <span style="opacity: 0.55;">About</span>
     </nav>
+    <button class="nav-toggle" onClick="{{ toggleMenu }}" aria-label="Menu"><span></span><span></span></button>
   </header>
+
+  <div style="position: fixed; inset: 0; z-index: 20; background: #FAF8F3; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 36px; opacity: {{ menuOpacity }}; pointer-events: {{ menuEvents }}; transition: opacity 0.5s ease;">
+    <a href="#" onClick="{{ toggleMenu }}" style="position: absolute; top: 30px; right: 40px; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: #7A736A;">Close</a>
+    <a href="../Work/" style="color: #211E1A; font-size: 32px; font-weight: 300;">Work</a>
+    <a href="../Calendar/" style="color: #211E1A; font-size: 32px; font-weight: 300;">Calendar</a>
+    <span style="color: #211E1A; font-size: 32px; font-weight: 300; opacity: 0.4;">About</span>
+    <a href="../Contact/" style="color: #211E1A; font-size: 32px; font-weight: 300;">Contact</a>
+  </div>
 
   <section style="min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 0 40px; box-sizing: border-box; position: relative;">
     <div style="display: flex; align-items: center; gap: 18px; margin-bottom: 5vh;">
@@ -53,7 +76,7 @@ a:hover { color: #8C5A3C; }
     </div>
   </section>
 
-  <section style="display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 60px; align-items: center; padding: 12vh 40px; box-sizing: border-box;">
+  <section class="bio-grid" style="display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 60px; align-items: center; padding: 12vh 40px; box-sizing: border-box;">
     <figure style="margin: 0;">
       <img src="https://images.squarespace-cdn.com/content/v1/6055dab2c740e90bc9ec4fb1/7310ff14-33e6-4e91-bd65-863ad49698de/Kulturorte_SpaceLab_048.jpg" alt="Cheng-Yang Peng" style="display: block; width: 100%; height: 80vh; object-fit: cover; object-position: 50% 12%; filter: saturate(1.1) contrast(1.03) brightness(1.05) sepia(0.05);">
       <figcaption style="font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: #B0A79A; margin-top: 12px;">Photo · <a href="https://www.andreakiesendahl.com/portfolio/" target="_blank" rel="noopener">Andrea Kiesendahl</a></figcaption>
@@ -66,7 +89,7 @@ a:hover { color: #8C5A3C; }
   </section>
 
   <sc-for list="{{ chapters }}" as="c" hint-placeholder-count="4">
-    <section style="display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); gap: 60px; border-top: 1px solid #E5DFD3; padding: 0 40px; box-sizing: border-box; min-height: 62vh;">
+    <section class="chapter-grid" style="display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); gap: 60px; border-top: 1px solid #E5DFD3; padding: 0 40px; box-sizing: border-box; min-height: 62vh;">
       <div style="position: sticky; top: 0; align-self: start; padding: 10vh 0;">
         <p style="font-size: clamp(80px, 11vw, 190px); font-weight: 300; line-height: 1; letter-spacing: -0.03em; color: #E9E2D6; margin: 0;">{{ c.num }}</p>
         <p style="font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: #8C5A3C; margin: 2vh 0 0;">{{ c.label }}</p>
@@ -94,7 +117,7 @@ a:hover { color: #8C5A3C; }
   <section style="border-top: 1px solid #E5DFD3; padding: 0 40px; box-sizing: border-box;">
     <p style="font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: #7A736A; margin: 6vh 0 2vh;">Recent work</p>
     <sc-for list="{{ works }}" as="w" hint-placeholder-count="3">
-      <a href="{{ w.href }}" style="display: grid; grid-template-columns: 60px minmax(0, 1fr) auto; align-items: baseline; gap: 28px; padding: 3vh 0; border-bottom: 1px solid #E5DFD3; transition: padding-left 0.9s cubic-bezier(0.22, 1, 0.36, 1), color 0.9s cubic-bezier(0.22, 1, 0.36, 1);" style-hover="padding-left: 24px; color: #8C5A3C;">
+      <a href="{{ w.href }}" class="work-row" style="display: grid; grid-template-columns: 60px minmax(0, 1fr) auto; align-items: baseline; gap: 28px; padding: 3vh 0; border-bottom: 1px solid #E5DFD3; transition: padding-left 0.9s cubic-bezier(0.22, 1, 0.36, 1), color 0.9s cubic-bezier(0.22, 1, 0.36, 1);" style-hover="padding-left: 24px; color: #8C5A3C;">
         <span style="font-size: 12px; color: #B0A79A; letter-spacing: 0.1em;">{{ w.num }}</span>
         <span style="font-size: clamp(28px, 4vw, 54px); font-weight: 300; line-height: 1.05;">{{ w.label }}</span>
         <span style="font-size: 12px; color: #7A736A; letter-spacing: 0.1em; text-transform: uppercase;">{{ w.meta }}</span>
@@ -117,7 +140,7 @@ a:hover { color: #8C5A3C; }
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: &quot;100%&quot;, &quot;height&quot;: &quot;100%&quot;}, &quot;portraitSrc&quot;: {&quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;https://images.squarespace-cdn.com/content/v1/6055dab2c740e90bc9ec4fb1/7310ff14-33e6-4e91-bd65-863ad49698de/Kulturorte_SpaceLab_048.jpg&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Content&quot;}}">
 class Component extends DCLogic {
-  state = { timeEssen: '', timeHsinchu: '' };
+  state = { timeEssen: '', timeHsinchu: '', menuOpen: false };
   componentDidMount() {
     this.tick = () => {
       const fmt = (tz) => new Intl.DateTimeFormat('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: tz }).format(new Date());
@@ -129,6 +152,9 @@ class Component extends DCLogic {
   componentWillUnmount() { clearInterval(this.timer); }
   renderVals() {
     return {
+      toggleMenu: (e) => { if (e) e.preventDefault(); this.setState((s) => ({ menuOpen: !s.menuOpen })); },
+      menuOpacity: this.state.menuOpen ? 1 : 0,
+      menuEvents: this.state.menuOpen ? 'auto' : 'none',
       timeEssen: this.state.timeEssen,
       timeHsinchu: this.state.timeHsinchu,
       portraitSrc: this.props.portraitSrc ?? 'https://images.squarespace-cdn.com/content/v1/6055dab2c740e90bc9ec4fb1/7310ff14-33e6-4e91-bd65-863ad49698de/Kulturorte_SpaceLab_048.jpg',
