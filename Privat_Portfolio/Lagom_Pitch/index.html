@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lagom & The Happiness Series</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inconsolata:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --white:#f7f4ef;
+    --ink:#1a1a18;
+    --ink-soft:#6b6b65;
+    --ink-faint:#b8b8b0;
+    --green:#3d5a3e;
+    --green-light:#c8d9c9;
+    --pink:#e8d5c4;
+  }
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  html,body{ height:100%; overflow:hidden; }
+  body{
+    background:var(--ink);
+    color:var(--white);
+    font-family:'Cormorant Garamond', Georgia, serif;
+    cursor:pointer;
+    -webkit-font-smoothing:antialiased;
+  }
+  .label{
+    font-family:'Inconsolata', monospace;
+    text-transform:uppercase;
+    letter-spacing:0.28em;
+    font-weight:400;
+  }
+
+  /* deck / slides */
+  .deck{ position:relative; width:100vw; height:100vh; }
+  .slide{
+    position:absolute; inset:0;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center;
+    padding:8vh 9vw;
+    opacity:0; pointer-events:none;
+    transition:opacity .5s ease;
+  }
+  .slide.active{ opacity:1; pointer-events:auto; }
+
+  .slide.dark{ background:var(--ink); color:var(--white); }
+  .slide.light{ background:var(--white); color:var(--ink); }
+
+  .photo-bg{
+    position:absolute; inset:0;
+    background-size:cover; background-position:center;
+  }
+  .photo-bg::after{
+    content:''; position:absolute; inset:0;
+    background:linear-gradient(180deg, rgba(10,10,9,.5) 0%, rgba(10,10,9,.3) 45%, rgba(10,10,9,.7) 100%);
+  }
+  .slide .content{ position:relative; z-index:2; max-width:880px; }
+
+  /* generic big line (used by most sparse text beats) */
+  .line{
+    font-weight:300; line-height:1.4;
+    font-size:clamp(26px, 3.6vw, 46px);
+  }
+  .line .soft{ color:var(--green-light); }
+  .line em{ font-style:italic; }
+
+  .eyebrow{
+    font-family:'Inconsolata', monospace; letter-spacing:.28em;
+    font-size:clamp(11px, .95vw, 14px); font-weight:400;
+    color:var(--green-light); margin-bottom:1.3em;
+  }
+  .slide.light .eyebrow{ color:var(--green); }
+
+  /* stat card rows (Authority recap / bio beats) */
+  .stat-title{
+    font-weight:400; letter-spacing:.02em;
+    font-size:clamp(34px, 5vw, 64px);
+    margin-bottom:.9em;
+  }
+  .stat-title small{
+    display:block; font-family:'Inconsolata', monospace;
+    letter-spacing:.24em; font-size:.3em; color:var(--green-light);
+    margin-bottom:.6em;
+  }
+  .slide.light .stat-title small{ color:var(--green); }
+  .stat-rows{
+    display:flex; flex-direction:column; gap:.55em;
+    font-family:'Inconsolata', monospace; letter-spacing:.06em;
+    font-size:clamp(13px, 1.35vw, 18px);
+  }
+  .stat-rows .row-strong{
+    font-family:'Cormorant Garamond', Georgia, serif; font-style:italic;
+    letter-spacing:0; font-size:1.5em; margin-top:.3em;
+  }
+
+  /* ask */
+  .ask-block{
+    font-weight:300; line-height:1.5;
+    font-size:clamp(19px, 2.2vw, 28px);
+    margin-top:1.2em;
+  }
+  .ask-tag{
+    display:block;
+    font-family:'Inconsolata', monospace; letter-spacing:.16em;
+    text-transform:uppercase;
+    font-size:clamp(11px, .95vw, 14px); color:var(--green-light);
+    margin-bottom:.4em;
+  }
+
+  /* contact / qr */
+  #sContact .photo-bg{ background-image:url('assets/hero-7.jpg'); }
+  .qr-card{
+    background:var(--white); color:var(--ink);
+    border-radius:6px; padding:2.4em 2.6em 2em;
+    display:flex; flex-direction:column; align-items:center; gap:1em;
+    box-shadow:0 30px 80px rgba(0,0,0,.4);
+  }
+  .qr-card img{ width:clamp(120px,14vw,180px); height:auto; }
+  .qr-card .scan{
+    font-family:'Inconsolata', monospace; letter-spacing:.28em;
+    font-size:11px; color:var(--green);
+  }
+  .qr-card .url{ font-size:clamp(18px,1.9vw,24px); }
+  .contact-thanks{
+    margin-top:1em;
+    font-family:'Inconsolata', monospace; letter-spacing:.2em;
+    font-size:clamp(12px,1.1vw,15px); color:rgba(247,244,239,.75);
+  }
+
+  /* edge nav zones: click near either side to go forward/back */
+  .nav-zone{ position:fixed; top:0; height:100%; width:9vw; z-index:50; cursor:pointer; }
+  .nav-zone.prev{ left:0; }
+  .nav-zone.next{ right:0; }
+
+  /* progress dots */
+  .dots{
+    position:fixed; bottom:3.2vh; left:50%; transform:translateX(-50%);
+    display:flex; gap:6px; z-index:10; flex-wrap:wrap; max-width:70vw; justify-content:center;
+  }
+  .dots span{
+    width:4px; height:4px; border-radius:50%;
+    background:rgba(247,244,239,.22);
+    transition:background .3s ease;
+  }
+  .dots span.on{ background:rgba(247,244,239,.9); }
+  body.on-light .dots span{ background:rgba(26,26,24,.18); }
+  body.on-light .dots span.on{ background:rgba(26,26,24,.8); }
+</style>
+</head>
+<body>
+
+<div class="deck">
+
+  <!-- ATTENTION 1: mirror question -->
+  <section class="slide dark active" id="s1">
+    <div class="photo-bg" style="background-image:url('assets/hero-1.jpg')"></div>
+    <div class="content line">
+      Have you ever stood in front of a mirror before a meeting,
+      and wondered:
+      <br><span class="soft">am I taking care of myself,<br>or am I doing this for someone else?</span>
+    </div>
+  </section>
+
+  <!-- ATTENTION 3: self intro -->
+  <section class="slide dark" id="s3">
+    <div class="content line">
+      I'm Cheng-Yang Peng.
+      <br>Taiwanese choreographer, based in Germany.
+      <br><span class="soft">I make dance about the states of being<br>we've forgotten we already have.</span>
+    </div>
+  </section>
+
+  <!-- TAKEAWAY -->
+  <section class="slide dark" id="s4">
+    <div class="photo-bg" style="background-image:url('assets/hero-3.jpg')"></div>
+    <div class="content line">
+      Lagom is chapter one of a series.
+      <br>The whole series asks one question:
+      <br><span class="soft">what is true happiness?</span>
+      <br>Not the performed kind. <em>The real kind.</em>
+    </div>
+  </section>
+
+  <!-- AUTHORITY 1: Lagom recap -->
+  <section class="slide dark" id="s5">
+    <div class="content">
+      <div class="stat-title"><small>Chapter One</small>Lagom</div>
+      <div class="stat-rows">
+        <div>25 minute duet</div>
+        <div>Maschinenhaus Essen &middot; April 2026</div>
+        <div class="row-strong">Ready to tour</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AUTHORITY 2: chapter two title -->
+  <section class="slide dark" id="s6">
+    <div class="content">
+      <div class="eyebrow">Chapter Two</div>
+      <div class="stat-title" style="font-size:clamp(30px,4.2vw,54px)">The Dog, The Cat<br>and The Sheep</div>
+      <div class="line" style="font-size:clamp(18px,2vw,26px)"><em>A piece about letting go.</em></div>
+    </div>
+  </section>
+
+  <!-- AUTHORITY 3: dog -->
+  <section class="slide dark" id="s7">
+    <div class="photo-bg" style="background-image:url('assets/marquee-10.jpg')"></div>
+    <div class="content">
+      <div class="eyebrow">The Dog</div>
+      <div class="line">Loves with no calculation.
+        <br><span class="soft">For one moment,<br>you are the most important being alive.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- AUTHORITY 4: cat -->
+  <section class="slide dark" id="s8">
+    <div class="photo-bg" style="background-image:url('assets/marquee-06.jpg')"></div>
+    <div class="content">
+      <div class="eyebrow">The Cat</div>
+      <div class="line">Doesn't chase. Doesn't perform.
+        <br>Doesn't negotiate to be loved.
+        <br><span class="soft"><em>It simply is.</em></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- AUTHORITY 5: sheep -->
+  <section class="slide dark" id="s9">
+    <div class="photo-bg" style="background-image:url('assets/marquee-08.jpg')"></div>
+    <div class="content">
+      <div class="eyebrow">The Sheep</div>
+      <div class="line">Not performing. Not even for itself.
+        <br><span class="soft">Just standing in the field,<br>a little confused, and staying.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- AUTHORITY 6: open question -->
+  <section class="slide dark" id="s10">
+    <div class="photo-bg" style="background-image:url('assets/marquee-04.jpg')"></div>
+    <div class="content line">
+      What does a body look like
+      <br>when it stops imagining it's being watched?
+      <br><span class="soft">I don't know yet. That's why I'm making this.</span>
+    </div>
+  </section>
+
+  <!-- ASK -->
+  <section class="slide dark" id="sAsk">
+    <div class="content">
+      <div class="eyebrow">Two things</div>
+      <div class="ask-block">
+        <span class="ask-tag">Lagom</span>
+        Ready to travel. I'd love to bring it to your audience.
+      </div>
+      <div class="ask-block">
+        <span class="ask-tag">The Dog, The Cat and The Sheep</span>
+        Just beginning. I'd love to build it with the right people.
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT / QR -->
+  <section class="slide dark" id="sContact">
+    <div class="photo-bg"></div>
+    <div class="content">
+      <div class="qr-card">
+        <img src="assets/qr.svg" alt="QR code to chengyangpeng.com">
+        <div class="scan">Scan to visit</div>
+        <div class="url">chengyangpeng.com</div>
+      </div>
+      <div class="contact-thanks">Thank you</div>
+    </div>
+  </section>
+
+</div>
+
+<div class="nav-zone prev" id="navPrev"></div>
+<div class="nav-zone next" id="navNext"></div>
+<div class="dots" id="dots"></div>
+
+<script>
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const dotsWrap = document.getElementById('dots');
+  slides.forEach(() => dotsWrap.appendChild(document.createElement('span')));
+  const dots = Array.from(dotsWrap.children);
+
+  let i = 0;
+  function render(){
+    slides.forEach((s, idx) => s.classList.toggle('active', idx === i));
+    dots.forEach((d, idx) => d.classList.toggle('on', idx === i));
+    document.body.classList.toggle('on-light', slides[i].classList.contains('light'));
+  }
+  function next(){ if (i < slides.length - 1){ i++; render(); } }
+  function prev(){ if (i > 0){ i--; render(); } }
+
+  document.addEventListener('click', (e) => {
+    if (e.target.closest('a')) return;
+    next();
+  });
+  document.getElementById('navNext').addEventListener('click', (e) => { e.stopPropagation(); next(); });
+  document.getElementById('navPrev').addEventListener('click', (e) => { e.stopPropagation(); prev(); });
+  document.addEventListener('keydown', (e) => {
+    if (['ArrowRight','ArrowDown',' ','PageDown'].includes(e.key)){ e.preventDefault(); next(); }
+    if (['ArrowLeft','ArrowUp','PageUp'].includes(e.key)){ e.preventDefault(); prev(); }
+  });
+
+  render();
+</script>
+
+</body>
+</html>
