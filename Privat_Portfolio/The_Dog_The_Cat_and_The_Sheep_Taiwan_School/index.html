@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>狗、貓與羊</title>
+<link rel="icon" href="assets/site-icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inconsolata:wght@300;400;500&family=Noto+Serif+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --white:#f7f4ef;
+    --ink:#1a1a18;
+    --ink-soft:#6b6b65;
+    --ink-faint:#b8b8b0;
+    --green:#3d5a3e;
+    --green-light:#c8d9c9;
+    --pink:#e8d5c4;
+    --serif:'Cormorant Garamond','Noto Serif TC',Georgia,serif;
+    --mono:'Inconsolata','Noto Serif TC',monospace;
+  }
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  html,body{ height:100%; overflow:hidden; }
+  body{
+    background:var(--ink);
+    color:var(--white);
+    font-family:var(--serif);
+    cursor:pointer;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* deck / slides */
+  .deck{ position:relative; width:100vw; height:100vh; height:100dvh; }
+  .slide{
+    position:absolute; inset:0;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center;
+    padding:8vh 9vw;
+    opacity:0; pointer-events:none;
+    transition:opacity .5s ease;
+    overflow-y:auto;
+  }
+  .slide.active{ opacity:1; pointer-events:auto; }
+
+  .slide.dark{ background:var(--ink); color:var(--white); }
+  .slide.light{ background:var(--white); color:var(--ink); }
+
+  .photo-bg{
+    position:absolute; inset:0;
+    background-size:cover; background-position:center;
+  }
+  .photo-bg::after{
+    content:''; position:absolute; inset:0;
+    background:linear-gradient(180deg, rgba(10,10,9,.55) 0%, rgba(10,10,9,.35) 45%, rgba(10,10,9,.75) 100%);
+  }
+  .photo-bg.deep::after{
+    background:radial-gradient(ellipse at center, rgba(10,10,9,.78) 0%, rgba(10,10,9,.55) 70%, rgba(10,10,9,.7) 100%);
+  }
+  .slide .content{ position:relative; z-index:2; max-width:900px; }
+  .photo-bg ~ .content{ text-shadow:0 1px 18px rgba(0,0,0,.55); }
+
+  /* generic big line */
+  .line{
+    text-wrap:balance;
+    font-weight:300; line-height:1.75; letter-spacing:.04em;
+    font-size:clamp(22px, 3vw, 40px);
+  }
+  .line .soft{ color:var(--green-light); }
+  .slide.light .line .soft{ color:var(--green); }
+  .line em{ font-style:italic; }
+
+  .eyebrow{
+    font-family:var(--mono); letter-spacing:.28em;
+    font-size:clamp(11px, .95vw, 14px); font-weight:400;
+    color:var(--green-light); margin-bottom:1.3em;
+  }
+  .slide.light .eyebrow{ color:var(--green); }
+
+  .small-note{
+    margin-top:2em;
+    font-family:var(--mono); letter-spacing:.12em; line-height:1.9;
+    font-size:clamp(12px, 1.05vw, 15px); color:rgba(247,244,239,.72);
+  }
+  .slide.light .small-note{ color:var(--ink-soft); }
+
+  /* titles */
+  .stat-title{
+    font-weight:400; letter-spacing:.02em; line-height:1.15;
+    font-size:clamp(34px, 5vw, 64px);
+    margin-bottom:.7em;
+  }
+  .stat-title small{
+    display:block; font-family:var(--mono);
+    letter-spacing:.24em; font-size:.28em; color:var(--green-light);
+    margin-bottom:.8em;
+  }
+  .stat-rows{
+    display:flex; flex-direction:column; gap:.6em;
+    font-family:var(--mono); letter-spacing:.08em;
+    font-size:clamp(13px, 1.35vw, 18px);
+  }
+  .stat-rows .row-strong{
+    font-family:var(--serif); font-style:italic;
+    letter-spacing:.04em; font-size:1.4em; margin-top:.4em;
+  }
+
+  /* cover: split, the lone sheep */
+  #sCover{ flex-direction:row; align-items:stretch; padding:0; text-align:left; }
+  #sCover .cover-img{
+    flex:0 0 42%; height:100%;
+    background:url('assets/vb-sheep-hill.jpg') center 60%/cover;
+  }
+  #sCover .cover-text{
+    flex:1; padding:8vh 7vw;
+    display:flex; flex-direction:column; justify-content:center;
+    background:linear-gradient(180deg,#1f2a20 0%, var(--ink) 100%);
+  }
+  .cover-title{
+    font-weight:400; line-height:1.08;
+    font-size:clamp(40px, 5.6vw, 84px);
+  }
+  .cover-zh{
+    margin-top:.5em; font-weight:300; letter-spacing:.3em;
+    font-size:clamp(20px, 2.2vw, 30px); color:var(--green-light);
+  }
+  .cover-meta{
+    margin-top:2.6em; font-family:var(--mono); letter-spacing:.2em; line-height:2;
+    font-size:clamp(11px, 1vw, 14px); color:rgba(247,244,239,.7);
+  }
+
+  /* five abilities */
+  .five{
+    list-style:none; text-align:left; margin:1.2em auto 0; max-width:640px;
+    display:flex; flex-direction:column; gap:.85em;
+  }
+  .five li{
+    display:flex; gap:1.1em; align-items:baseline;
+    font-weight:300; letter-spacing:.05em; line-height:1.6;
+    font-size:clamp(17px, 1.9vw, 25px);
+    border-bottom:1px solid rgba(26,26,24,.12); padding-bottom:.7em;
+  }
+  .five li:last-child{ border-bottom:none; }
+  .five .n{
+    font-family:'Inconsolata',monospace; font-size:.7em; color:var(--green);
+    flex:0 0 1.4em;
+  }
+
+  /* vision board grid */
+  #sBoard{ padding:7vh 6vw; }
+  .board{
+    display:grid; gap:10px; width:100%; max-width:1100px;
+    grid-template-columns:repeat(4, 1fr);
+    grid-auto-rows:clamp(110px, 17vh, 200px);
+    grid-auto-flow:dense;
+    margin-top:1.4em;
+  }
+  .board figure{ position:relative; overflow:hidden; border-radius:3px; background:#2a2a27; }
+  .board img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .board .tall{ grid-row:span 2; }
+  .board .wide{ grid-column:span 2; }
+  .board figcaption{
+    position:absolute; left:0; right:0; bottom:0;
+    padding:1.6em .8em .6em;
+    font-family:var(--mono); font-size:11px; letter-spacing:.14em; text-align:left;
+    background:linear-gradient(180deg, transparent, rgba(10,10,9,.75));
+  }
+
+  /* students slide */
+  .ask-block{
+    font-weight:300; line-height:1.75; letter-spacing:.04em;
+    font-size:clamp(18px, 2vw, 26px);
+    margin-top:1.4em;
+  }
+  .ask-tag{
+    display:block;
+    font-family:var(--mono); letter-spacing:.2em;
+    font-size:clamp(11px, .95vw, 14px); color:var(--green-light);
+    margin-bottom:.4em;
+  }
+  .big-num{
+    font-family:'Cormorant Garamond',serif; font-weight:300;
+    font-size:clamp(64px, 9vw, 130px); line-height:1; letter-spacing:.02em;
+  }
+  .big-num span{ font-family:var(--serif); font-size:.3em; letter-spacing:.2em; margin-left:.3em; }
+
+  /* video */
+  #sVideo{ padding:6vh 7vw; }
+  .video-wrap{
+    position:relative; width:min(960px, 100%); aspect-ratio:16/9;
+    margin-top:1.2em; border-radius:4px; overflow:hidden;
+    background:#000 url('https://i.ytimg.com/vi/UaiRmW316Fw/hqdefault.jpg') center/cover;
+    box-shadow:0 30px 80px rgba(0,0,0,.45);
+  }
+  .video-wrap iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; }
+  .play{
+    position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+    background:rgba(10,10,9,.35); border:0; cursor:pointer; color:var(--white);
+    transition:background .3s ease;
+  }
+  .play:hover{ background:rgba(10,10,9,.15); }
+  .play .circle{
+    width:clamp(64px,7vw,92px); height:clamp(64px,7vw,92px); border-radius:50%;
+    border:1.5px solid rgba(247,244,239,.9);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .play .circle::after{
+    content:''; margin-left:6px;
+    border-left:18px solid var(--white); border-top:11px solid transparent; border-bottom:11px solid transparent;
+  }
+  .yt-link{
+    display:inline-block; margin-top:1.2em;
+    font-family:var(--mono); letter-spacing:.18em; font-size:13px;
+    color:var(--green-light); text-decoration:none; border-bottom:1px solid rgba(200,217,201,.4);
+    padding-bottom:2px;
+  }
+
+  /* contact / qr */
+  #sContact .photo-bg{ background-image:url('assets/portrait.jpg'); }
+  .site-card{
+    display:inline-flex; align-items:center; gap:1.1em;
+    background:var(--white); color:var(--ink); text-decoration:none;
+    border-radius:999px; padding:.8em 2em .8em .8em;
+    box-shadow:0 30px 80px rgba(0,0,0,.4);
+    transition:transform .3s ease;
+  }
+  .site-card:hover{ transform:translateY(-2px); }
+  .site-card img{ width:clamp(48px,4.4vw,60px); height:auto; border-radius:14px; }
+  .site-text{ display:flex; flex-direction:column; align-items:flex-start; gap:.2em; text-shadow:none; }
+  .site-card .url{ font-size:clamp(20px,2vw,26px); }
+  .site-card .go{
+    font-family:var(--mono); letter-spacing:.24em;
+    font-size:12px; color:var(--green);
+  }
+  .contact-thanks{
+    margin-top:1.2em;
+    font-family:var(--mono); letter-spacing:.3em;
+    font-size:clamp(13px,1.2vw,16px); color:rgba(247,244,239,.8);
+  }
+
+  /* edge nav zones */
+  .nav-zone{ position:fixed; top:0; height:100%; width:9vw; z-index:50; cursor:pointer; }
+  .nav-zone.prev{ left:0; }
+  .nav-zone.next{ right:0; }
+
+  /* progress dots */
+  .dots{
+    position:fixed; bottom:3.2vh; left:50%; transform:translateX(-50%);
+    display:flex; gap:6px; z-index:10; flex-wrap:wrap; max-width:70vw; justify-content:center;
+  }
+  .dots span{
+    width:4px; height:4px; border-radius:50%;
+    background:rgba(247,244,239,.22);
+    transition:background .3s ease;
+  }
+  .dots span.on{ background:rgba(247,244,239,.9); }
+  body.on-light .dots span{ background:rgba(26,26,24,.18); }
+  body.on-light .dots span.on{ background:rgba(26,26,24,.8); }
+
+  /* phone */
+  @media (max-width:760px){
+    .slide{ padding:9vh 22px; justify-content:safe center; }
+    #sCover{ flex-direction:column; }
+    #sCover .cover-img{ flex:0 0 46%; width:100%; }
+    #sCover .cover-text{ padding:5vh 22px 8vh; justify-content:flex-start; }
+    .board{ grid-template-columns:repeat(2, 1fr); grid-auto-rows:120px; }
+    .board .wide{ grid-column:span 2; }
+    .nav-zone{ width:14vw; }
+  }
+</style>
+</head>
+<body>
+
+<div class="deck">
+
+  <!-- COVER -->
+  <section class="slide dark active" id="sCover">
+    <div class="cover-img" role="img" aria-label="綠色山丘上的一隻羊"></div>
+    <div class="cover-text">
+      <div class="eyebrow">「真正的快樂」系列 · 第二章</div>
+      <div class="cover-title">The Dog, The Cat<br>and The Sheep</div>
+      <div class="cover-zh">狗、貓與羊</div>
+      <div class="cover-meta">
+        彭程洋 · 編舞<br>
+        2027 · 德國首演
+      </div>
+    </div>
+  </section>
+
+
+  <!-- SELF INTRO -->
+  <section class="slide dark" id="sMe">
+    <div class="content">
+      <div class="line">
+        我是彭程洋，
+        <br>來自台灣的編舞家，現在住在德國埃森（Essen）。
+        <br><span class="soft">我想用舞蹈，找回那些我們早就擁有、
+        <br>卻不小心忘記的狀態。</span>
+      </div>
+      <div class="small-note">
+        德國福克旺藝術大學（Folkwang）舞蹈系畢業
+        <br>曾任職於埃森阿爾托芭蕾舞團（Aalto Ballett Essen）、哈根劇院（Theater Hagen）
+        <br>2024 巴黎帕運開幕式舞者
+      </div>
+    </div>
+  </section>
+
+  <!-- SERIES -->
+  <section class="slide dark" id="sSeries">
+    <div class="photo-bg" style="background-image:url('assets/lagom-1.jpg')"></div>
+    <div class="content line">
+      我在做一個系列作品，
+      <br>整個系列只問一個問題：
+      <br><span class="soft">什麼是真正的快樂？</span>
+    </div>
+  </section>
+
+  <!-- CHAPTER ONE: LAGOM -->
+  <section class="slide dark" id="sLagom">
+    <div class="content">
+      <div class="stat-title"><small>第一章</small>Lagom</div>
+      <div class="line" style="font-size:clamp(18px,2vw,26px)">
+        瑞典語，意思是「不多也不少，剛剛好」。
+        <br><span class="soft">它談的是：當我們努力追求平衡，
+        <br>平衡卻慢慢變成了一種表演給別人看的東西。</span>
+      </div>
+      <div class="stat-rows" style="margin-top:2em">
+        <div>25 分鐘雙人舞</div>
+        <div>2026 年 4 月 · 德國埃森 Maschinenhaus 首演</div>
+        <div class="row-strong">首演全場售罄</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHAPTER TWO TITLE -->
+  <section class="slide dark" id="sTitle">
+    <div class="photo-bg deep" style="background-image:url('assets/vb-sheep-valley.jpg')"></div>
+    <div class="content">
+      <div class="eyebrow">第二章</div>
+      <div class="stat-title" style="font-size:clamp(32px,4.4vw,58px)">The Dog, The Cat<br>and The Sheep</div>
+      <div class="line" style="font-size:clamp(18px,2vw,26px)">
+        如果 Lagom 談的是我們怎麼失去那份平靜，
+        <br><span class="soft">這一章想問的是：我們要怎麼想起來，
+        <br>它其實一直都在我們身上？</span>
+      </div>
+      <div class="small-note">5 位舞者 · 2027 年 · 德國首演</div>
+    </div>
+  </section>
+
+  <!-- ANIMALS -->
+  <section class="slide dark" id="sAnimals">
+    <div class="content line">
+      這一次，我把目光轉向動物。
+      <br>不是把牠們當成象徵，
+      <br><span class="soft">而是當作活生生的例子，
+      <br>牠們一直都活在那個我們忘記了的狀態裡。</span>
+    </div>
+  </section>
+
+  <!-- DOG -->
+  <section class="slide dark" id="sDog">
+    <div class="photo-bg" style="background-image:url('assets/lagom-joy.jpg')"></div>
+    <div class="content">
+      <div class="eyebrow">THE DOG · 狗</div>
+      <div class="line">牠朝你奔過來，不計較，不算計。
+        <br><span class="soft">在那一刻，你就是全世界最重要的存在。</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- CAT -->
+  <section class="slide dark" id="sCat">
+    <div class="photo-bg" style="background-image:url('assets/lagom-duet.jpg')"></div>
+    <div class="content">
+      <div class="eyebrow">THE CAT · 貓</div>
+      <div class="line">不追逐，不表演，
+        <br>不用討好誰來換取被愛。
+        <br><span class="soft">牠本來就完整。</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- SHEEP -->
+  <section class="slide dark" id="sSheep">
+    <div class="photo-bg deep" style="background-image:url('assets/vb-sheep-fence.jpg')"></div>
+    <div class="content">
+      <div class="eyebrow">THE SHEEP · 羊</div>
+      <div class="line">吃草，吃草，再吃草。
+        <br><span class="soft">一個沒有觀眾的身體。</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FIVE ABILITIES -->
+  <section class="slide light" id="sFive">
+    <div class="content">
+      <div class="eyebrow">排練的起點</div>
+      <div class="line" style="font-size:clamp(20px,2.4vw,32px)">
+        小時候會、長大卻忘了的五種超能力
+      </div>
+      <ol class="five">
+        <li><span class="n">01</span>完全活在當下</li>
+        <li><span class="n">02</span>把「玩」當成最重要的事</li>
+        <li><span class="n">03</span>想做就去做，不先想後果</li>
+        <li><span class="n">04</span>誠實，不先權衡</li>
+        <li><span class="n">05</span>從一種情緒自由流到下一種，不抓著故事不放</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- FORM -->
+  <section class="slide dark" id="sForm">
+    <div class="photo-bg deep" style="background-image:url('assets/vb-dancers-group.jpg')"></div>
+    <div class="content">
+      <div class="eyebrow">舞蹈的樣子</div>
+      <div class="line" style="font-size:clamp(20px,2.5vw,34px)">
+        當代舞，加上一點舞蹈劇場，和一點點荒謬。
+        <br>我們不模仿動物，而是仔細觀察，然後放手，
+        <br><span class="soft">留下的不是動物的樣子，而是牠們那份自在。</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- VISION BOARD -->
+  <section class="slide dark" id="sBoard">
+    <div class="content" style="max-width:1100px; width:100%">
+      <div class="eyebrow">視覺靈感</div>
+      <div class="board">
+        <figure class="tall"><img src="assets/vb-sheep-hill.jpg" alt="綠色山丘上的一隻羊"></figure>
+        <figure class="wide"><img src="assets/vb-sheep-fence.jpg" alt="圍欄兩側，一隻羊與一群羊"></figure>
+        <figure class="tall"><img src="assets/vb-cone-hats.jpg" alt="公路上戴尖帽的兩個人"></figure>
+        <figure><img src="assets/vb-sheep-backs.jpg" alt="俯視擁擠的羊背" style="object-position:center 30%"></figure>
+        <figure><img src="assets/vb-dancers-group.jpg" alt="黑衣白褲的舞者群體" style="object-position:center 40%"></figure>
+        <figure class="wide"><img src="assets/vb-wool-costumes.jpg" alt="長毛服裝群像"></figure>
+        <figure class="wide"><img src="assets/vb-bench-group.jpg" alt="長椅上整齊排列的人物" style="object-position:center 35%"></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY -->
+  <section class="slide dark" id="sWhy">
+    <div class="content line">
+      幾年前因為壓力，我的胃一直在痛，
+      <br>看了醫生也找不出原因。
+      <br>有一天去看了一場舞蹈演出，
+      <br>走出劇場時，胃好像沒那麼痛了。
+      <br><span class="soft">那是我第一次知道：舞台是可以療癒人的。</span>
+    </div>
+  </section>
+
+  <!-- WHY 2 -->
+  <section class="slide dark" id="sWhy2">
+    <div class="content line">
+      所以這支作品，不是要告訴觀眾什麼是快樂。
+      <br><span class="soft">而是打開一個空間，
+      <br>讓身體自己想起，
+      <br>那個它早就認識的狀態。</span>
+    </div>
+  </section>
+
+  <!-- FOR YOUR STUDENTS -->
+  <section class="slide dark" id="sStudents">
+    <div class="photo-bg deep" style="background-image:url('assets/vb-cone-hats.jpg'); background-position:center 70%"></div>
+    <div class="content">
+      <div class="eyebrow">給同學們跳的</div>
+      <div class="big-num">8–9<span>分鐘</span></div>
+      <div class="ask-block">
+        明年，我想把這支作品的一段選粹，
+        <br>帶到學校，由同學們來跳。
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY STUDENTS -->
+  <section class="slide dark" id="sWhyStudents">
+    <div class="content">
+      <div class="line">
+        高中，正是一個一直被看見、
+        <br>被比較、被評分的年紀。
+        <br><span class="soft">也許在跳舞的這幾分鐘裡，
+        <br>可以想起那個不被看著的自己。</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- VIDEO -->
+  <section class="slide dark" id="sVideo">
+    <div class="content" style="width:100%; max-width:960px; display:flex; flex-direction:column; align-items:center">
+      <div class="eyebrow">先看看第一章 · Lagom</div>
+      <div class="video-wrap" id="videoWrap">
+        <button class="play" id="playBtn" aria-label="播放 Lagom 影片"><span class="circle"></span></button>
+      </div>
+      <a class="yt-link" href="https://youtu.be/UaiRmW316Fw" target="_blank" rel="noopener">在 YouTube 上觀看 ↗</a>
+    </div>
+  </section>
+
+  <!-- CONTACT / QR -->
+  <section class="slide dark" id="sContact">
+    <div class="photo-bg"></div>
+    <div class="content">
+      <a class="site-card" href="https://chengyangpeng.com" target="_blank" rel="noopener">
+        <img src="assets/site-icon.svg" alt="">
+        <span class="site-text">
+          <span class="url">chengyangpeng.com</span>
+          <span class="go">前往網站 ↗</span>
+        </span>
+      </a>
+      <div class="contact-thanks">謝謝 · 期待明年見</div>
+    </div>
+  </section>
+
+</div>
+
+<div class="nav-zone prev" id="navPrev"></div>
+<div class="nav-zone next" id="navNext"></div>
+<div class="dots" id="dots"></div>
+
+<script>
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const dotsWrap = document.getElementById('dots');
+  slides.forEach(() => dotsWrap.appendChild(document.createElement('span')));
+  const dots = Array.from(dotsWrap.children);
+
+  let i = 0;
+  function render(){
+    slides.forEach((s, idx) => s.classList.toggle('active', idx === i));
+    dots.forEach((d, idx) => d.classList.toggle('on', idx === i));
+    document.body.classList.toggle('on-light', slides[i].classList.contains('light'));
+    // stop the video when leaving its slide
+    if (slides[i].id !== 'sVideo') stopVideo();
+  }
+  function next(){ if (i < slides.length - 1){ i++; render(); } }
+  function prev(){ if (i > 0){ i--; render(); } }
+
+  // YouTube: load the player only when asked, so the deck stays light
+  const videoWrap = document.getElementById('videoWrap');
+  const playBtn = document.getElementById('playBtn');
+  function playVideo(){
+    // YouTube refuses to embed in a page opened straight from disk, so open it there instead
+    if (location.protocol === 'file:'){ window.open('https://youtu.be/UaiRmW316Fw', '_blank'); return; }
+    const f = document.createElement('iframe');
+    f.src = 'https://www.youtube-nocookie.com/embed/UaiRmW316Fw?autoplay=1&rel=0&playsinline=1';
+    f.title = 'Lagom';
+    f.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+    f.referrerPolicy = 'strict-origin-when-cross-origin';
+    f.allowFullscreen = true;
+    playBtn.style.display = 'none';
+    videoWrap.appendChild(f);
+  }
+  function stopVideo(){
+    const f = videoWrap.querySelector('iframe');
+    if (f){ f.remove(); playBtn.style.display = ''; }
+  }
+  playBtn.addEventListener('click', (e) => { e.stopPropagation(); playVideo(); });
+
+  document.addEventListener('click', (e) => {
+    if (e.target.closest('a, button, .video-wrap')) return;
+    next();
+  });
+  document.getElementById('navNext').addEventListener('click', (e) => { e.stopPropagation(); next(); });
+  document.getElementById('navPrev').addEventListener('click', (e) => { e.stopPropagation(); prev(); });
+  document.addEventListener('keydown', (e) => {
+    if (['ArrowRight','ArrowDown',' ','PageDown'].includes(e.key)){ e.preventDefault(); next(); }
+    if (['ArrowLeft','ArrowUp','PageUp'].includes(e.key)){ e.preventDefault(); prev(); }
+  });
+
+  // swipe on phones
+  let sx = null, sy = null;
+  document.addEventListener('touchstart', (e) => { sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, {passive:true});
+  document.addEventListener('touchend', (e) => {
+    if (sx === null) return;
+    const dx = e.changedTouches[0].clientX - sx, dy = e.changedTouches[0].clientY - sy;
+    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)){ dx < 0 ? next() : prev(); }
+    sx = sy = null;
+  });
+
+  render();
+</script>
+
+</body>
+</html>
